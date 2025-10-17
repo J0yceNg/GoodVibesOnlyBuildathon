@@ -1,0 +1,8 @@
+<net version="1.9" junctionCornerDetail="0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <location netOffset="0.00,0.00" convBoundary="0.00,0.00,500.00,0.00" origBoundary="0.00,0.00,500.00,0.00" projParameter="!"/>
+    <edge id="road0" from="n0" to="n1" numLanes="1" speed="13.89">
+        <lane id="road0_0" index="0" speed="13.89" length="500.00" shape="0.00,0.00 500.00,0.00"/>
+    </edge>
+    <junction id="n0" x="0.00" y="0.00" type="priority"/>
+    <junction id="n1" x="500.00" y="0.00" type="priority"/>
+</net>
