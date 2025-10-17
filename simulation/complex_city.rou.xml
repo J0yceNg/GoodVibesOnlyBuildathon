@@ -1,0 +1,438 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<routes>
+    <!-- ============================================ -->
+    <!-- VEHICLE TYPES - Enhanced variety -->
+    <!-- ============================================ -->
+    
+    <vType id="car" vClass="passenger" color="0.8,0.8,0.8" length="5" maxSpeed="22.22" accel="2.6" decel="4.5" sigma="0.5">
+        <param key="priority" value="1"/>
+    </vType>
+    
+    <vType id="sedan" vClass="passenger" color="0.7,0.7,0.9" length="4.5" maxSpeed="20" accel="2.4" decel="4.3" sigma="0.45"/>
+    
+    <vType id="suv" vClass="passenger" color="0.6,0.6,0.8" length="5.5" maxSpeed="19" accel="2.2" decel="4.0" sigma="0.55"/>
+    
+    <vType id="sports_car" vClass="passenger" color="1,0,0" length="4.2" maxSpeed="27.78" accel="3.5" decel="5.0" sigma="0.3"/>
+    
+    <vType id="regular_bus" vClass="bus" color="0,0.8,0" length="12" width="2.5" maxSpeed="15" accel="1.2" decel="3.0" sigma="0.3">
+        <param key="priority" value="2"/>
+    </vType>
+    
+    <vType id="express_bus" vClass="bus" color="0,0.6,0.8" length="12" width="2.5" maxSpeed="18" accel="1.4" decel="3.2" sigma="0.25">
+        <param key="priority" value="2"/>
+    </vType>
+    
+    <vType id="olympic_shuttle" vClass="bus" color="1,0.84,0" length="12" width="2.5" maxSpeed="18" accel="1.5" decel="3.0" sigma="0.2">
+        <param key="priority" value="3"/>
+        <param key="is_olympic" value="true"/>
+    </vType>
+    
+    <vType id="accessible_vehicle" vClass="bus" color="0,0.5,1" length="10" width="2.4" maxSpeed="15" accel="1.2" decel="3.0" sigma="0.2">
+        <param key="priority" value="4"/>
+        <param key="is_accessible" value="true"/>
+    </vType>
+    
+    <vType id="emergency" vClass="emergency" color="1,0,0" length="7" maxSpeed="25" accel="2.5" decel="4.5" sigma="0.1">
+        <param key="priority" value="5"/>
+        <param key="is_emergency" value="true"/>
+    </vType>
+    
+    <vType id="taxi" vClass="taxi" color="1,1,0" length="4.5" maxSpeed="20" accel="2.8" decel="4.0" sigma="0.35">
+        <param key="priority" value="2"/>
+    </vType>
+    
+    <vType id="delivery_van" vClass="delivery" color="0.5,0.5,0.5" length="6" maxSpeed="18" accel="2.0" decel="3.5" sigma="0.25"/>
+    
+    <vType id="small_truck" vClass="truck" color="0.4,0.4,0.4" length="8" maxSpeed="16" accel="1.8" decel="3.2" sigma="0.3"/>
+    
+    <vType id="large_truck" vClass="truck" color="0.3,0.3,0.3" length="14" maxSpeed="13.89" accel="1.2" decel="2.8" sigma="0.35"/>
+    
+    <vType id="motorcycle" vClass="motorcycle" color="0,0,1" length="2.2" maxSpeed="25" accel="4.0" decel="6.0" sigma="0.4"/>
+    
+    <vType id="bicycle" vClass="bicycle" color="0.5,0.8,0.5" length="1.8" maxSpeed="6.94" accel="1.0" decel="3.0" sigma="0.2"/>
+
+    <!-- ============================================ -->
+    <!-- MAJOR ARTERIAL ROUTES (Row 4 - Main Olympic Corridor) -->
+    <!-- ============================================ -->
+    
+    <!-- Full East-West routes -->
+    <route id="arterial_full_ew" edges="A4B4 B4C4 C4D4 D4E4 E4F4 F4G4 G4H4 H4I4 I4J4"/>
+    <route id="arterial_full_we" edges="J4I4 I4H4 H4G4 G4F4 F4E4 E4D4 D4C4 C4B4 B4A4"/>
+    
+    <!-- Long distance routes -->
+    <route id="arterial_long_ew_1" edges="A4B4 B4C4 C4D4 D4E4 E4F4 F4G4"/>
+    <route id="arterial_long_ew_2" edges="C4D4 D4E4 E4F4 F4G4 G4H4 H4I4"/>
+    <route id="arterial_long_we_1" edges="J4I4 I4H4 H4G4 G4F4 F4E4 E4D4"/>
+    <route id="arterial_long_we_2" edges="G4F4 F4E4 E4D4 D4C4 C4B4 B4A4"/>
+    
+    <!-- Medium distance routes -->
+    <route id="arterial_med_ew_1" edges="A4B4 B4C4 C4D4 D4E4"/>
+    <route id="arterial_med_ew_2" edges="D4E4 E4F4 F4G4 G4H4"/>
+    <route id="arterial_med_we_1" edges="H4G4 G4F4 F4E4 E4D4"/>
+    <route id="arterial_med_we_2" edges="E4D4 D4C4 C4B4 B4A4"/>
+    
+    <!-- Short routes -->
+    <route id="arterial_short_1" edges="B4C4 C4D4"/>
+    <route id="arterial_short_2" edges="E4F4 F4G4"/>
+    <route id="arterial_short_3" edges="G4F4 F4E4"/>
+    
+    <!-- ============================================ -->
+    <!-- SECONDARY ARTERIALS (Rows 2, 3, 5, 6) -->
+    <!-- ============================================ -->
+    
+    <!-- Row 3 Routes -->
+    <route id="row3_full_ew" edges="A3B3 B3C3 C3D3 D3E3 E3F3 F3G3 G3H3 H3I3 I3J3"/>
+    <route id="row3_full_we" edges="J3I3 I3H3 H3G3 G3F3 F3E3 E3D3 D3C3 C3B3 B3A3"/>
+    <route id="row3_long_ew" edges="A3B3 B3C3 C3D3 D3E3 E3F3 F3G3"/>
+    <route id="row3_long_we" edges="J3I3 I3H3 H3G3 G3F3 F3E3 E3D3"/>
+    
+    <!-- Row 5 Routes -->
+    <route id="row5_full_ew" edges="A5B5 B5C5 C5D5 D5E5 E5F5 F5G5 G5H5 H5I5 I5J5"/>
+    <route id="row5_full_we" edges="J5I5 I5H5 H5G5 G5F5 F5E5 E5D5 D5C5 C5B5 B5A5"/>
+    <route id="row5_long_ew" edges="A5B5 B5C5 C5D5 D5E5 E5F5 F5G5"/>
+    <route id="row5_long_we" edges="J5I5 I5H5 H5G5 G5F5 F5E5 E5D5"/>
+    
+    <!-- Row 2 Routes (North Secondary) -->
+    <route id="row2_full_ew" edges="A2B2 B2C2 C2D2 D2E2 E2F2 F2G2 G2H2 H2I2 I2J2"/>
+    <route id="row2_full_we" edges="J2I2 I2H2 H2G2 G2F2 F2E2 E2D2 D2C2 C2B2 B2A2"/>
+    
+    <!-- Row 6 Routes (South Secondary) -->
+    <route id="row6_full_ew" edges="A6B6 B6C6 C6D6 D6E6 E6F6 F6G6 G6H6 H6I6 I6J6"/>
+    <route id="row6_full_we" edges="J6I6 I6H6 H6G6 G6F6 F6E6 E6D6 D6C6 C6B6 B6A6"/>
+    
+    <!-- ============================================ -->
+    <!-- LOCAL STREETS (Rows 0, 1, 7, 8) -->
+    <!-- ============================================ -->
+    
+    <!-- Row 0 (Outermost North) -->
+    <route id="row0_ew" edges="A0B0 B0C0 C0D0 D0E0 E0F0"/>
+    <route id="row0_we" edges="F0E0 E0D0 D0C0 C0B0 B0A0"/>
+    
+    <!-- Row 1 -->
+    <route id="row1_ew" edges="A1B1 B1C1 C1D1 D1E1 E1F1 F1G1"/>
+    <route id="row1_we" edges="G1F1 F1E1 E1D1 D1C1 C1B1 B1A1"/>
+    
+    <!-- Row 7 (Outermost South) -->
+    <route id="row7_ew" edges="A7B7 B7C7 C7D7 D7E7 E7F7 F7G7"/>
+    <route id="row7_we" edges="G7F7 F7E7 E7D7 D7C7 C7B7 B7A7"/>
+    
+    <!-- ============================================ -->
+    <!-- MAJOR NORTH-SOUTH ROUTES (Columns C, E, G - Key Intersections) -->
+    <!-- ============================================ -->
+    
+    <!-- Column C (West-Central) -->
+    <route id="colC_full_ns" edges="C0C1 C1C2 C2C3 C3C4 C4C5 C5C6 C6C7"/>
+    <route id="colC_full_sn" edges="C7C6 C6C5 C5C4 C4C3 C3C2 C2C1 C1C0"/>
+    <route id="colC_long_ns" edges="C0C1 C1C2 C2C3 C3C4 C4C5"/>
+    <route id="colC_long_sn" edges="C7C6 C6C5 C5C4 C4C3"/>
+    
+    <!-- Column E (Central) -->
+    <route id="colE_full_ns" edges="E0E1 E1E2 E2E3 E3E4 E4E5 E5E6 E6E7"/>
+    <route id="colE_full_sn" edges="E7E6 E6E5 E5E4 E4E3 E3E2 E2E1 E1E0"/>
+    <route id="colE_long_ns" edges="E0E1 E1E2 E2E3 E3E4 E4E5"/>
+    <route id="colE_long_sn" edges="E7E6 E6E5 E5E4 E4E3"/>
+    
+    <!-- Column G (East-Central) -->
+    <route id="colG_full_ns" edges="G0G1 G1G2 G2G3 G3G4 G4G5 G5G6 G6G7"/>
+    <route id="colG_full_sn" edges="G7G6 G6G5 G5G4 G4G3 G3G2 G2G1 G1G0"/>
+    <route id="colG_long_ns" edges="G0G1 G1G2 G2G3 G3G4 G4G5"/>
+    <route id="colG_long_sn" edges="G7G6 G6G5 G5G4 G4G3"/>
+    
+    <!-- ============================================ -->
+    <!-- SECONDARY NORTH-SOUTH ROUTES -->
+    <!-- ============================================ -->
+    
+    <!-- Column A (West Edge) -->
+    <route id="colA_ns" edges="A0A1 A1A2 A2A3 A3A4 A4A5 A5A6"/>
+    <route id="colA_sn" edges="A6A5 A5A4 A4A3 A3A2 A2A1 A1A0"/>
+    
+    <!-- Column B -->
+    <route id="colB_ns" edges="B0B1 B1B2 B2B3 B3B4 B4B5 B5B6"/>
+    <route id="colB_sn" edges="B6B5 B5B4 B4B3 B3B2 B2B1 B1B0"/>
+    
+    <!-- Column D -->
+    <route id="colD_ns" edges="D0D1 D1D2 D2D3 D3D4 D4D5 D5D6"/>
+    <route id="colD_sn" edges="D6D5 D5D4 D4D3 D3D2 D2D1 D1D0"/>
+    
+    <!-- Column F -->
+    <route id="colF_ns" edges="F0F1 F1F2 F2F3 F3F4 F4F5 F5F6"/>
+    <route id="colF_sn" edges="F6F5 F5F4 F4F3 F3F2 F2F1 F1F0"/>
+    
+    <!-- Column H -->
+    <route id="colH_ns" edges="H0H1 H1H2 H2H3 H3H4 H4H5 H5H6"/>
+    <route id="colH_sn" edges="H6H5 H5H4 H4H3 H3H2 H2H1 H1H0"/>
+    
+    <!-- Column I -->
+    <route id="colI_ns" edges="I0I1 I1I2 I2I3 I3I4 I4I5 I5I6"/>
+    <route id="colI_sn" edges="I6I5 I5I4 I4I3 I3I2 I2I1 I1I0"/>
+    
+    <!-- Column J (East Edge) -->
+    <route id="colJ_ns" edges="J0J1 J1J2 J2J3 J3J4 J4J5 J5J6"/>
+    <route id="colJ_sn" edges="J6J5 J5J4 J4J3 J3J2 J2J1 J1J0"/>
+    
+    <!-- ============================================ -->
+    <!-- COMPLEX MULTI-TURN ROUTES (Realistic City Navigation) -->
+    <!-- ============================================ -->
+    
+    <!-- L-shaped routes -->
+    <route id="complex_L1" edges="A0B0 B0C0 C0D0 D0D1 D1D2 D2D3 D3D4"/>
+    <route id="complex_L2" edges="J7I7 I7H7 H7G7 G7G6 G6G5 G5G4"/>
+    <route id="complex_L3" edges="A4A5 A5A6 A6A7 A7B7 B7C7 C7D7"/>
+    <route id="complex_L4" edges="J4J3 J3J2 J2J1 J1I1 I1H1 H1G1"/>
+    
+    <!-- Diagonal crossing routes -->
+    <route id="complex_diag1" edges="A0B0 B0B1 B1C1 C1C2 C2D2 D2D3 D3E3 E3E4"/>
+    <route id="complex_diag2" edges="J7I7 I7I6 I6H6 H6H5 H5G5 G5G4"/>
+    <route id="complex_diag3" edges="A7A6 A6B6 B6B5 B5C5 C5C4 C4D4"/>
+    <route id="complex_diag4" edges="J0J1 J1I1 I1I2 I2H2 H2H3 H3G3 G3G4"/>
+    
+    <!-- U-turn routes (return trips) -->
+    <route id="complex_U1" edges="A4B4 B4C4 C4D4 D4E4 E4E5 E5D5 D5C5 C5B5 B5A5"/>
+    <route id="complex_U2" edges="E0E1 E1E2 E2E3 E3F3 F3F2 F2F1 F1F0"/>
+    <route id="complex_U3" edges="J4I4 I4H4 H4G4 G4G5 G5H5 H5I5 I5J5"/>
+    
+    <!-- Cross-town routes -->
+    <route id="crosstown_1" edges="A1B1 B1C1 C1D1 D1D2 D2E2 E2F2 F2F3 F3G3 G3H3 H3H4"/>
+    <route id="crosstown_2" edges="J7I7 I7H7 H7G7 G7G6 G6F6 F6E6 E6E5 E5D5 D5C5 C5C4"/>
+    <route id="crosstown_3" edges="A6A5 A5B5 B5C5 C5C4 C4D4 D4E4 E4E3 E3F3 F3G3"/>
+    <route id="crosstown_4" edges="J2J3 J3I3 I3H3 H3H4 H4G4 G4F4 F4F5 F5E5 E5D5"/>
+    
+    <!-- Circular/Loop routes -->
+    <route id="loop_downtown" edges="D3E3 E3F3 F3F4 F4F5 F5E5 E5D5 D5D4 D4D3"/>
+    <route id="loop_west" edges="A3A4 A4B4 B4B5 B5A5 A5A4 A4A3"/>
+    <route id="loop_east" edges="I3I4 I4J4 J4J5 J5I5 I5I4 I4I3"/>
+    <route id="loop_central_large" edges="C2D2 D2E2 E2F2 F2F3 F3F4 F4F5 F5E5 E5D5 D5C5 C5C4 C4C3 C3C2"/>
+    
+    <!-- ============================================ -->
+    <!-- TRAFFIC FLOWS - PERIOD 1: Early Morning (0-1800s) -->
+    <!-- ============================================ -->
+    
+    <!-- Main Arterial (Row 4) - Light traffic -->
+    <flow id="early_arterial_ew_1" type="car" begin="0" end="1800" route="arterial_full_ew" probability="0.06" departLane="best"/>
+    <flow id="early_arterial_ew_2" type="sedan" begin="0" end="1800" route="arterial_long_ew_1" probability="0.05" departLane="best"/>
+    <flow id="early_arterial_we_1" type="car" begin="0" end="1800" route="arterial_full_we" probability="0.055" departLane="best"/>
+    <flow id="early_arterial_we_2" type="sedan" begin="0" end="1800" route="arterial_long_we_1" probability="0.045" departLane="best"/>
+    
+    <!-- Secondary arterials - Very light -->
+    <flow id="early_row3_ew" type="car" begin="0" end="1800" route="row3_long_ew" probability="0.03" departLane="best"/>
+    <flow id="early_row5_ew" type="car" begin="0" end="1800" route="row5_long_ew" probability="0.03" departLane="best"/>
+    
+    <!-- Buses - Low frequency -->
+    <flow id="early_bus_arterial" type="regular_bus" begin="0" end="1800" route="arterial_full_ew" period="240" departLane="0"/>
+    <flow id="early_bus_row3" type="regular_bus" begin="0" end="1800" route="row3_full_ew" period="300" departLane="0"/>
+    
+    <!-- Delivery vehicles - Early morning deliveries -->
+    <flow id="early_delivery_1" type="delivery_van" begin="0" end="1800" route="complex_L1" period="90" departLane="best"/>
+    <flow id="early_delivery_2" type="delivery_van" begin="0" end="1800" route="complex_L3" period="100" departLane="best"/>
+    <flow id="early_truck_1" type="small_truck" begin="0" end="1800" route="arterial_med_ew_1" period="180" departLane="best"/>
+    
+    <!-- ============================================ -->
+    <!-- TRAFFIC FLOWS - PERIOD 2: Morning Rush (1800-3600s) -->
+    <!-- ============================================ -->
+    
+    <!-- Main Arterial (Row 4) - HEAVY traffic -->
+    <flow id="rush_arterial_ew_1" type="car" begin="1800" end="3600" route="arterial_full_ew" probability="0.35" departLane="best"/>
+    <flow id="rush_arterial_ew_2" type="sedan" begin="1800" end="3600" route="arterial_long_ew_1" probability="0.28" departLane="best"/>
+    <flow id="rush_arterial_ew_3" type="suv" begin="1800" end="3600" route="arterial_med_ew_1" probability="0.22" departLane="best"/>
+    <flow id="rush_arterial_we_1" type="car" begin="1800" end="3600" route="arterial_full_we" probability="0.32" departLane="best"/>
+    <flow id="rush_arterial_we_2" type="sedan" begin="1800" end="3600" route="arterial_long_we_1" probability="0.26" departLane="best"/>
+    <flow id="rush_arterial_we_3" type="suv" begin="1800" end="3600" route="arterial_med_we_1" probability="0.20" departLane="best"/>
+    
+    <!-- Secondary arterials (Rows 3, 5) - Heavy traffic -->
+    <flow id="rush_row3_ew" type="car" begin="1800" end="3600" route="row3_full_ew" probability="0.25" departLane="best"/>
+    <flow id="rush_row3_we" type="car" begin="1800" end="3600" route="row3_full_we" probability="0.23" departLane="best"/>
+    <flow id="rush_row5_ew" type="car" begin="1800" end="3600" route="row5_full_ew" probability="0.26" departLane="best"/>
+    <flow id="rush_row5_we" type="car" begin="1800" end="3600" route="row5_full_we" probability="0.24" departLane="best"/>
+    
+    <!-- Rows 2 and 6 - Moderate traffic -->
+    <flow id="rush_row2_ew" type="car" begin="1800" end="3600" route="row2_full_ew" probability="0.18" departLane="best"/>
+    <flow id="rush_row2_we" type="car" begin="1800" end="3600" route="row2_full_we" probability="0.17" departLane="best"/>
+    <flow id="rush_row6_ew" type="car" begin="1800" end="3600" route="row6_full_ew" probability="0.19" departLane="best"/>
+    <flow id="rush_row6_we" type="car" begin="1800" end="3600" route="row6_full_we" probability="0.18" departLane="best"/>
+    
+    <!-- North-South major routes - Heavy cross traffic -->
+    <flow id="rush_colC_ns" type="car" begin="1800" end="3600" route="colC_full_ns" probability="0.20" departLane="best"/>
+    <flow id="rush_colC_sn" type="car" begin="1800" end="3600" route="colC_full_sn" probability="0.19" departLane="best"/>
+    <flow id="rush_colE_ns" type="car" begin="1800" end="3600" route="colE_full_ns" probability="0.22" departLane="best"/>
+    <flow id="rush_colE_sn" type="car" begin="1800" end="3600" route="colE_full_sn" probability="0.21" departLane="best"/>
+    <flow id="rush_colG_ns" type="car" begin="1800" end="3600" route="colG_full_ns" probability="0.21" departLane="best"/>
+    <flow id="rush_colG_sn" type="car" begin="1800" end="3600" route="colG_full_sn" probability="0.20" departLane="best"/>
+    
+    <!-- Buses - High frequency -->
+    <flow id="rush_bus_arterial_ew" type="regular_bus" begin="1800" end="3600" route="arterial_full_ew" period="45" departLane="0"/>
+    <flow id="rush_bus_arterial_we" type="regular_bus" begin="1800" end="3600" route="arterial_full_we" period="50" departLane="0"/>
+    <flow id="rush_bus_row3" type="regular_bus" begin="1800" end="3600" route="row3_full_ew" period="60" departLane="0"/>
+    <flow id="rush_bus_row5" type="express_bus" begin="1800" end="3600" route="row5_full_ew" period="55" departLane="0"/>
+    
+    <!-- Taxis - High demand -->
+    <flow id="rush_taxi_1" type="taxi" begin="1800" end="3600" route="crosstown_1" period="20" departLane="best"/>
+    <flow id="rush_taxi_2" type="taxi" begin="1800" end="3600" route="crosstown_2" period="22" departLane="best"/>
+    <flow id="rush_taxi_3" type="taxi" begin="1800" end="3600" route="complex_diag1" period="25" departLane="best"/>
+    
+    <!-- Complex routes - Commuter patterns -->
+    <flow id="rush_complex_1" type="car" begin="1800" end="3600" route="crosstown_1" probability="0.12" departLane="best"/>
+    <flow id="rush_complex_2" type="sedan" begin="1800" end="3600" route="crosstown_2" probability="0.11" departLane="best"/>
+    <flow id="rush_complex_3" type="car" begin="1800" end="3600" route="complex_diag1" probability="0.10" departLane="best"/>
+    <flow id="rush_complex_4" type="sedan" begin="1800" end="3600" route="complex_diag2" probability="0.09" departLane="best"/>
+    
+    <!-- Motorcycles - Lane splitting advantage -->
+    <flow id="rush_motorcycle_1" type="motorcycle" begin="1800" end="3600" route="arterial_full_ew" period="30" departLane="best"/>
+    <flow id="rush_motorcycle_2" type="motorcycle" begin="1800" end="3600" route="arterial_full_we" period="32" departLane="best"/>
+    
+    <!-- ============================================ -->
+    <!-- TRAFFIC FLOWS - PERIOD 3: Olympic Events (3600-5400s) -->
+    <!-- ============================================ -->
+    
+    <!-- Main Arterial - Controlled for Olympic traffic -->
+    <flow id="event_arterial_cars_ew" type="car" begin="3600" end="5400" route="arterial_full_ew" probability="0.15" departLane="best"/>
+    <flow id="event_arterial_cars_we" type="car" begin="3600" end="5400" route="arterial_full_we" probability="0.14" departLane="best"/>
+    
+    <!-- OLYMPIC SHUTTLES - Very high frequency on main corridor -->
+    <flow id="event_shuttle_ew_1" type="olympic_shuttle" begin="3600" end="5400" route="arterial_full_ew" period="20" departLane="0"/>
+    <flow id="event_shuttle_ew_2" type="olympic_shuttle" begin="3600" end="5400" route="arterial_long_ew_1" period="25" departLane="0"/>
+    <flow id="event_shuttle_we_1" type="olympic_shuttle" begin="3600" end="5400" route="arterial_full_we" period="22" departLane="0"/>
+    <flow id="event_shuttle_we_2" type="olympic_shuttle" begin="3600" end="5400" route="arterial_long_we_1" period="27" departLane="0"/>
+    
+    <!-- Olympic shuttles on secondary routes -->
+    <flow id="event_shuttle_row3_ew" type="olympic_shuttle" begin="3600" end="5400" route="row3_full_ew" period="35" departLane="0"/>
+    <flow id="event_shuttle_row5_ew" type="olympic_shuttle" begin="3600" end="5400" route="row5_full_ew" period="38" departLane="0"/>
+    
+    <!-- ACCESSIBLE VEHICLES - High frequency -->
+    <flow id="event_accessible_ew_1" type="accessible_vehicle" begin="3600" end="5400" route="arterial_full_ew" period="40" departLane="0"/>
+    <flow id="event_accessible_ew_2" type="accessible_vehicle" begin="3600" end="5400" route="arterial_long_ew_1" period="45" departLane="0"/>
+    <flow id="event_accessible_we_1" type="accessible_vehicle" begin="3600" end="5400" route="arterial_full_we" period="42" departLane="0"/>
+    <flow id="event_accessible_we_2" type="accessible_vehicle" begin="3600" end="5400" route="arterial_long_we_1" period="48" departLane="0"/>
+    
+    <!-- Regular buses - Still operating -->
+    <flow id="event_bus_row2" type="regular_bus" begin="3600" end="5400" route="row2_full_ew" period="80" departLane="0"/>
+    <flow id="event_bus_row6" type="regular_bus" begin="3600" end="5400" route="row6_full_ew" period="85" departLane="0"/>
+    
+    <!-- Diverted traffic on alternate routes -->
+    <flow id="event_divert_row2_ew" type="car" begin="3600" end="5400" route="row2_full_ew" probability="0.28" departLane="best"/>
+    <flow id="event_divert_row2_we" type="car" begin="3600" end="5400" route="row2_full_we" probability="0.26" departLane="best"/>
+    <flow id="event_divert_row6_ew" type="car" begin="3600" end="5400" route="row6_full_ew" probability="0.30" departLane="best"/>
+    <flow id="event_divert_row6_we" type="car" begin="3600" end="5400" route="row6_full_we" probability="0.28" departLane="best"/>
+    
+    <!-- Taxis bringing people to events -->
+    <flow id="event_taxi_1" type="taxi" begin="3600" end="5400" route="complex_L1" period="15" departLane="best"/>
+    <flow id="event_taxi_2" type="taxi" begin="3600" end="5400" route="complex_L3" period="18" departLane="best"/>
+    <flow id="event_taxi_3" type="taxi" begin="3600" end="5400" route="crosstown_1" period="16" departLane="best"/>
+    
+    <!-- ============================================ -->
+    <!-- TRAFFIC FLOWS - PERIOD 4: Evening Rush (5400-7200s) -->
+    <!-- ============================================ -->
+    
+    <!-- Main Arterial - Heavy return traffic -->
+    <flow id="evening_arterial_ew_1" type="car" begin="5400" end="7200" route="arterial_full_ew" probability="0.30" departLane="best"/>
+    <flow id="evening_arterial_ew_2" type="sedan" begin="5400" end="7200" route="arterial_long_ew_2" probability="0.24" departLane="best"/>
+    <flow id="evening_arterial_we_1" type="car" begin="5400" end="7200" route="arterial_full_we" probability="0.33" departLane="best"/>
+    <flow id="evening_arterial_we_2" type="sedan" begin="5400" end="7200" route="arterial_long_we_2" probability="0.27" departLane="best"/>
+    
+    <!-- All rows - Heavy traffic -->
+    <flow id="evening_row3_ew" type="car" begin="5400" end="7200" route="row3_full_ew" probability="0.22" departLane="best"/>
+    <flow id="evening_row3_we" type="car" begin="5400" end="7200" route="row3_full_we" probability="0.24" departLane="best"/>
+    <flow id="evening_row5_ew" type="car" begin="5400" end="7200" route="row5_full_ew" probability="0.23" departLane="best"/>
+    <flow id="evening_row5_we" type="car" begin="5400" end="7200" route="row5_full_we" probability="0.25" departLane="best"/>
+    <flow id="evening_row2_ew" type="car" begin="5400" end="7200" route="row2_full_ew" probability="0.19" departLane="best"/>
+    <flow id="evening_row2_we" type="car" begin="5400" end="7200" route="row2_full_we" probability="0.21" departLane="best"/>
+    <flow id="evening_row6_ew" type="car" begin="5400" end="7200" route="row6_full_ew" probability="0.20" departLane="best"/>
+    <flow id="evening_row6_we" type="car" begin="5400" end="7200" route="row6_full_we" probability="0.22" departLane="best"/>
+    
+    <!-- North-South routes -->
+    <flow id="evening_colC_ns" type="car" begin="5400" end="7200" route="colC_full_ns" probability="0.18" departLane="best"/>
+    <flow id="evening_colE_ns" type="car" begin="5400" end="7200" route="colE_full_ns" probability="0.19" departLane="best"/>
+    <flow id="evening_colG_ns" type="car" begin="5400" end="7200" route="colG_full_ns" probability="0.18" departLane="best"/>
+    
+    <!-- Buses -->
+    <flow id="evening_bus_arterial" type="regular_bus" begin="5400" end="7200" route="arterial_full_ew" period="50" departLane="0"/>
+    <flow id="evening_bus_row3" type="regular_bus" begin="5400" end="7200" route="row3_full_ew" period="65" departLane="0"/>
+    <flow id="evening_express_bus" type="express_bus" begin="5400" end="7200" route="arterial_full_we" period="55" departLane="0"/>
+    
+    <!-- Olympic shuttles - Reduced frequency -->
+    <flow id="evening_shuttle_ew" type="olympic_shuttle" begin="5400" end="7200" route="arterial_full_ew" period="120" departLane="0"/>
+    <flow id="evening_shuttle_we" type="olympic_shuttle" begin="5400" end="7200" route="arterial_full_we" period="130" departLane="0"/>
+    
+    <!-- Taxis - High demand -->
+    <flow id="evening_taxi_1" type="taxi" begin="5400" end="7200" route="crosstown_1" period="18" departLane="best"/>
+    <flow id="evening_taxi_2" type="taxi" begin="5400" end="7200" route="crosstown_3" period="20" departLane="best"/>
+    
+    <!-- ============================================ -->
+    <!-- TRAFFIC FLOWS - PERIOD 5: Night (7200-10800s) -->
+    <!-- ============================================ -->
+    
+    <!-- Main Arterial - Light traffic -->
+    <flow id="night_arterial_ew" type="car" begin="7200" end="10800" route="arterial_full_ew" probability="0.08" departLane="best"/>
+    <flow id="night_arterial_we" type="car" begin="7200" end="10800" route="arterial_full_we" probability="0.07" departLane="best"/>
+    
+    <!-- Secondary routes - Very light -->
+    <flow id="night_row3_ew" type="car" begin="7200" end="10800" route="row3_long_ew" probability="0.04" departLane="best"/>
+    <flow id="night_row5_we" type="car" begin="7200" end="10800" route="row5_long_we" probability="0.04" departLane="best"/>
+    
+    <!-- Night buses - Low frequency -->
+    <flow id="night_bus_1" type="regular_bus" begin="7200" end="10800" route="arterial_full_ew" period="360" departLane="0"/>
+    <flow id="night_bus_2" type="regular_bus" begin="7200" end="10800" route="row3_full_ew" period="420" departLane="0"/>
+    
+    <!-- Taxis - Moderate -->
+    <flow id="night_taxi_1" type="taxi" begin="7200" end="10800" route="complex_U1" period="90" departLane="best"/>
+    <flow id="night_taxi_2" type="taxi" begin="7200" end="10800" route="crosstown_2" period="100" departLane="best"/>
+    
+    <!-- Delivery trucks - Night deliveries -->
+    <flow id="night_delivery_1" type="delivery_van" begin="7200" end="10800" route="arterial_med_ew_1" period="70" departLane="best"/>
+    <flow id="night_delivery_2" type="small_truck" begin="7200" end="10800" route="row3_long_ew" period="120" departLane="best"/>
+    <flow id="night_truck_1" type="large_truck" begin="7200" end="10800" route="arterial_full_ew" period="180" departLane="best"/>
+    
+    <!-- Sports cars - Late night -->
+    <flow id="night_sports_1" type="sports_car" begin="7200" end="10800" route="arterial_full_ew" period="150" departLane="best"/>
+    
+    <!-- ============================================ -->
+    <!-- CONTINUOUS FLOWS (All day) -->
+    <!-- ============================================ -->
+    
+    <!-- Emergency Vehicles -->
+    <flow id="emergency_arterial_ew" type="emergency" begin="100" end="10800" route="arterial_full_ew" period="400" departLane="free" departSpeed="max"/>
+    <flow id="emergency_arterial_we" type="emergency" begin="150" end="10800" route="arterial_full_we" period="420" departLane="free" departSpeed="max"/>
+    <flow id="emergency_row3" type="emergency" begin="200" end="10800" route="row3_full_ew" period="600" departLane="free" departSpeed="max"/>
+    <flow id="emergency_cross_1" type="emergency" begin="250" end="10800" route="colE_full_ns" period="550" departLane="free" departSpeed="max"/>
+    <flow id="emergency_complex" type="emergency" begin="300" end="10800" route="complex_diag1" period="700" departLane="free" departSpeed="max"/>
+    
+    <!-- Cyclists - Daylight hours -->
+    <flow id="cyclist_1" type="bicycle" begin="1800" end="7200" route="row1_ew" period="120" departLane="best"/>
+    <flow id="cyclist_2" type="bicycle" begin="1800" end="7200" route="row7_ew" period="140" departLane="best"/>
+    <flow id="cyclist_3" type="bicycle" begin="1800" end="7200" route="colB_ns" period="150" departLane="best"/>
+    
+    <!-- Local traffic on edge rows (continuous low volume) -->
+    <flow id="local_row0_ew" type="car" begin="0" end="10800" route="row0_ew" probability="0.05" departLane="best"/>
+    <flow id="local_row7_ew" type="car" begin="0" end="10800" route="row7_ew" probability="0.05" departLane="best"/>
+    <flow id="local_row1_ew" type="car" begin="0" end="10800" route="row1_ew" probability="0.08" departLane="best"/>
+    <flow id="local_row6_ew" type="car" begin="0" end="10800" route="row6_we" probability="0.08" departLane="best"/>
+    
+    <!-- Minor column traffic -->
+    <flow id="local_colA_ns" type="car" begin="0" end="10800" route="colA_ns" probability="0.06" departLane="best"/>
+    <flow id="local_colB_ns" type="car" begin="0" end="10800" route="colB_ns" probability="0.09" departLane="best"/>
+    <flow id="local_colD_ns" type="car" begin="0" end="10800" route="colD_ns" probability="0.10" departLane="best"/>
+    <flow id="local_colF_ns" type="car" begin="0" end="10800" route="colF_ns" probability="0.10" departLane="best"/>
+    <flow id="local_colH_ns" type="car" begin="0" end="10800" route="colH_ns" probability="0.09" departLane="best"/>
+    <flow id="local_colI_ns" type="car" begin="0" end="10800" route="colI_ns" probability="0.08" departLane="best"/>
+    <flow id="local_colJ_ns" type="car" begin="0" end="10800" route="colJ_ns" probability="0.07" departLane="best"/>
+    
+    <!-- ============================================ -->
+    <!-- ADDITIONAL COMPLEX PATTERNS -->
+    <!-- ============================================ -->
+    
+    <!-- Loop routes - continuous circulation -->
+    <flow id="loop_downtown_flow" type="car" begin="1800" end="7200" route="loop_downtown" period="60" departLane="best"/>
+    <flow id="loop_central_flow" type="car" begin="1800" end="7200" route="loop_central_large" period="80" departLane="best"/>
+    
+    <!-- U-turn patterns -->
+    <flow id="uturn_1" type="car" begin="1800" end="7200" route="complex_U1" period="120" departLane="best"/>
+    <flow id="uturn_2" type="car" begin="1800" end="7200" route="complex_U2" period="140" departLane="best"/>
+    
+    <!-- More diagonal routes -->
+    <flow id="diag_3" type="car" begin="1800" end="7200" route="complex_diag3" probability="0.08" departLane="best"/>
+    <flow id="diag_4" type="car" begin="1800" end="7200" route="complex_diag4" probability="0.07" departLane="best"/>
+    
+    <!-- L-shaped patterns -->
+    <flow id="l_pattern_2" type="car" begin="0" end="10800" route="complex_L2" probability="0.06" departLane="best"/>
+    <flow id="l_pattern_4" type="car" begin="0" end="10800" route="complex_L4" probability="0.06" departLane="best"/>
+
+</routes>

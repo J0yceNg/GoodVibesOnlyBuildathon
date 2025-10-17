@@ -1,0 +1,374 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<routes>
+    <!-- Vehicle Types -->
+    <vType id="car" vClass="passenger" color="0.8,0.8,0.8" length="5" maxSpeed="22.22" accel="2.6" decel="4.5" sigma="0.5">
+        <param key="priority" value="1"/>
+    </vType>
+
+    <vType id="regular_bus" vClass="bus" color="0,0.8,0" length="12" width="2.5" maxSpeed="15" accel="1.2" decel="3.0" sigma="0.3">
+        <param key="priority" value="2"/>
+    </vType>
+
+    <vType id="olympic_shuttle" vClass="bus" color="1,0.84,0" length="12" width="2.5" maxSpeed="18" accel="1.5" decel="3.0" sigma="0.2">
+        <param key="priority" value="3"/>
+        <param key="is_olympic" value="true"/>
+    </vType>
+
+    <vType id="accessible_vehicle" vClass="bus" color="0,0.5,1" length="10" width="2.4" maxSpeed="15" accel="1.2" decel="3.0" sigma="0.2">
+        <param key="priority" value="4"/>
+        <param key="is_accessible" value="true"/>
+    </vType>
+
+    <vType id="emergency" vClass="emergency" color="1,0,0" length="7" maxSpeed="25" accel="2.5" decel="4.5" sigma="0.1">
+        <param key="priority" value="5"/>
+        <param key="is_emergency" value="true"/>
+    </vType>
+
+    <vType id="truck" vClass="truck" color="0.5,0.5,0.5" length="8" maxSpeed="16.67" accel="1.5" decel="3.0" sigma="0.4">
+        <param key="priority" value="1"/>
+    </vType>
+
+    <!-- ============================================ -->
+    <!-- EAST-WEST ROUTES (Across each row) - SHORT ROUTES -->
+    <!-- ============================================ -->
+
+    <!-- Row 0 (South) -->
+    <route id="ew_0_short" edges="A0B0 B0C0"/>
+    <route id="ew_0_medium" edges="A0B0 B0C0 C0D0"/>
+    <route id="ew_0_long" edges="A0B0 B0C0 C0D0 D0E0"/>
+
+    <!-- Row 1 -->
+    <route id="ew_1_short" edges="A1B1 B1C1"/>
+    <route id="ew_1_medium" edges="A1B1 B1C1 C1D1"/>
+    <route id="ew_1_long" edges="A1B1 B1C1 C1D1 D1E1"/>
+
+    <!-- Row 2 -->
+    <route id="ew_2_short" edges="A2B2 B2C2"/>
+    <route id="ew_2_medium" edges="A2B2 B2C2 C2D2"/>
+    <route id="ew_2_long" edges="A2B2 B2C2 C2D2 D2E2"/>
+
+    <!-- Row 3 -->
+    <route id="ew_3_short" edges="A3B3 B3C3"/>
+    <route id="ew_3_medium" edges="A3B3 B3C3 C3D3"/>
+    <route id="ew_3_long" edges="A3B3 B3C3 C3D3 D3E3"/>
+
+    <!-- Row 4 -->
+    <route id="ew_4_short" edges="A4B4 B4C4"/>
+    <route id="ew_4_medium" edges="A4B4 B4C4 C4D4"/>
+    <route id="ew_4_long" edges="A4B4 B4C4 C4D4 D4E4"/>
+
+    <!-- Row 5 -->
+    <route id="ew_5_short" edges="A5B5 B5C5"/>
+    <route id="ew_5_medium" edges="A5B5 B5C5 C5D5"/>
+    <route id="ew_5_long" edges="A5B5 B5C5 C5D5 D5E5"/>
+
+    <!-- Row 6 -->
+    <route id="ew_6_short" edges="A6B6 B6C6"/>
+    <route id="ew_6_medium" edges="A6B6 B6C6 C6D6"/>
+    <route id="ew_6_long" edges="A6B6 B6C6 C6D6 D6E6"/>
+
+    <!-- Row 7 (North) -->
+    <route id="ew_7_short" edges="A7B7 B7C7"/>
+    <route id="ew_7_medium" edges="A7B7 B7C7 C7D7"/>
+    <route id="ew_7_long" edges="A7B7 B7C7 C7D7 D7E7"/>
+
+    <!-- ============================================ -->
+    <!-- NORTH-SOUTH ROUTES (Down each column) -->
+    <!-- ============================================ -->
+
+    <!-- Column A -->
+    <route id="ns_a_full" edges="A0A1 A1A2 A2A3 A3A4 A4A5 A5A6 A6A7"/>
+    <route id="ns_a_short_01" edges="A0A1 A1A2"/>
+    <route id="ns_a_short_12" edges="A1A2 A2A3"/>
+    <route id="ns_a_short_23" edges="A2A3 A3A4"/>
+    <route id="ns_a_short_34" edges="A3A4 A4A5"/>
+    <route id="ns_a_short_45" edges="A4A5 A5A6"/>
+    <route id="ns_a_short_56" edges="A5A6 A6A7"/>
+
+    <!-- Column B -->
+    <route id="ns_b_full" edges="B0B1 B1B2 B2B3 B3B4 B4B5 B5B6 B6B7"/>
+    <route id="ns_b_short_01" edges="B0B1 B1B2"/>
+    <route id="ns_b_short_12" edges="B1B2 B2B3"/>
+    <route id="ns_b_short_23" edges="B2B3 B3B4"/>
+    <route id="ns_b_short_34" edges="B3B4 B4B5"/>
+    <route id="ns_b_short_45" edges="B4B5 B5B6"/>
+    <route id="ns_b_short_56" edges="B5B6 B6B7"/>
+
+    <!-- Column C -->
+    <route id="ns_c_full" edges="C0C1 C1C2 C2C3 C3C4 C4C5 C5C6 C6C7"/>
+    <route id="ns_c_short_01" edges="C0C1 C1C2"/>
+    <route id="ns_c_short_12" edges="C1C2 C2C3"/>
+    <route id="ns_c_short_23" edges="C2C3 C3C4"/>
+    <route id="ns_c_short_34" edges="C3C4 C4C5"/>
+    <route id="ns_c_short_45" edges="C4C5 C5C6"/>
+    <route id="ns_c_short_56" edges="C5C6 C6C7"/>
+
+    <!-- Column D -->
+    <route id="ns_d_full" edges="D0D1 D1D2 D2D3 D3D4 D4D5 D5D6 D6D7"/>
+    <route id="ns_d_short_01" edges="D0D1 D1D2"/>
+    <route id="ns_d_short_12" edges="D1D2 D2D3"/>
+    <route id="ns_d_short_23" edges="D2D3 D3D4"/>
+    <route id="ns_d_short_34" edges="D3D4 D4D5"/>
+    <route id="ns_d_short_45" edges="D4D5 D5D6"/>
+    <route id="ns_d_short_56" edges="D5D6 D6D7"/>
+
+    <!-- Column E -->
+    <route id="ns_e_full" edges="E0E1 E1E2 E2E3 E3E4 E4E5 E5E6 E6E7"/>
+    <route id="ns_e_short_01" edges="E0E1 E1E2"/>
+    <route id="ns_e_short_12" edges="E1E2 E2E3"/>
+    <route id="ns_e_short_23" edges="E2E3 E3E4"/>
+    <route id="ns_e_short_34" edges="E3E4 E4E5"/>
+    <route id="ns_e_short_45" edges="E4E5 E5E6"/>
+    <route id="ns_e_short_56" edges="E5E6 E6E7"/>
+
+    <!-- Column F -->
+    <route id="ns_f_full" edges="F0F1 F1F2 F2F3 F3F4 F4F5 F5F6 F6F7"/>
+    <route id="ns_f_short_01" edges="F0F1 F1F2"/>
+    <route id="ns_f_short_12" edges="F1F2 F2F3"/>
+    <route id="ns_f_short_23" edges="F2F3 F3F4"/>
+    <route id="ns_f_short_34" edges="F3F4 F4F5"/>
+    <route id="ns_f_short_45" edges="F4F5 F5F6"/>
+    <route id="ns_f_short_56" edges="F5F6 F6F7"/>
+
+    <!-- Column G -->
+    <route id="ns_g_full" edges="G0G1 G1G2 G2G3 G3G4 G4G5 G5G6 G6G7"/>
+    <route id="ns_g_short_01" edges="G0G1 G1G2"/>
+    <route id="ns_g_short_12" edges="G1G2 G2G3"/>
+    <route id="ns_g_short_23" edges="G2G3 G3G4"/>
+    <route id="ns_g_short_34" edges="G3G4 G4G5"/>
+    <route id="ns_g_short_45" edges="G4G5 G5G6"/>
+    <route id="ns_g_short_56" edges="G5G6 G6G7"/>
+
+    <!-- Column H -->
+    <route id="ns_h_full" edges="H0H1 H1H2 H2H3 H3H4 H4H5 H5H6 H6H7"/>
+    <route id="ns_h_short_01" edges="H0H1 H1H2"/>
+    <route id="ns_h_short_12" edges="H1H2 H2H3"/>
+    <route id="ns_h_short_23" edges="H2H3 H3H4"/>
+    <route id="ns_h_short_34" edges="H3H4 H4H5"/>
+    <route id="ns_h_short_45" edges="H4H5 H5H6"/>
+    <route id="ns_h_short_56" edges="H5H6 H6H7"/>
+
+    <!-- Column I -->
+    <route id="ns_i_full" edges="I0I1 I1I2 I2I3 I3I4 I4I5 I5I6 I6I7"/>
+    <route id="ns_i_short_01" edges="I0I1 I1I2"/>
+    <route id="ns_i_short_12" edges="I1I2 I2I3"/>
+    <route id="ns_i_short_23" edges="I2I3 I3I4"/>
+    <route id="ns_i_short_34" edges="I3I4 I4I5"/>
+    <route id="ns_i_short_45" edges="I4I5 I5I6"/>
+    <route id="ns_i_short_56" edges="I5I6 I6I7"/>
+
+    <!-- Column J -->
+    <route id="ns_j_full" edges="J0J1 J1J2 J2J3 J3J4 J4J5 J5J6 J6J7"/>
+    <route id="ns_j_short_01" edges="J0J1 J1J2"/>
+    <route id="ns_j_short_12" edges="J1J2 J2J3"/>
+    <route id="ns_j_short_23" edges="J2J3 J3J4"/>
+    <route id="ns_j_short_34" edges="J3J4 J4J5"/>
+    <route id="ns_j_short_45" edges="J4J5 J5J6"/>
+    <route id="ns_j_short_56" edges="J5J6 J6J7"/>
+
+    <!-- ============================================ -->
+    <!-- COMPLEX TURNING ROUTES -->
+    <!-- ============================================ -->
+
+    <!-- Diagonal routes -->
+    <route id="diag_a0_b1" edges="A0B0 B0B1"/>
+    <route id="diag_b0_c1" edges="B0C0 C0C1"/>
+    <route id="diag_c0_d1" edges="C0D0 D0D1"/>
+    <route id="diag_d0_e1" edges="D0E0 E0E1"/>
+    <route id="diag_e0_f1" edges="E0F0 F0F1"/>
+    <route id="diag_f0_g1" edges="F0G0 G0G1"/>
+    <route id="diag_g0_h1" edges="G0H0 H0H1"/>
+    <route id="diag_h0_i1" edges="H0I0 I0I1"/>
+    <route id="diag_i0_j1" edges="I0J0 J0J1"/>
+
+    <route id="diag_a1_b2" edges="A1B1 B1B2"/>
+    <route id="diag_b1_c2" edges="B1C1 C1C2"/>
+    <route id="diag_c1_d2" edges="C1D1 D1D2"/>
+    <route id="diag_d1_e2" edges="D1E1 E1E2"/>
+    <route id="diag_e1_f2" edges="E1F1 F1F2"/>
+    <route id="diag_f1_g2" edges="F1G1 G1G2"/>
+    <route id="diag_g1_h2" edges="G1H1 H1H2"/>
+    <route id="diag_h1_i2" edges="H1I1 I1I2"/>
+    <route id="diag_i1_j2" edges="I1J1 J1J2"/>
+
+    <!-- More complex routes -->
+    <route id="complex_1" edges="A0A1 A1B1 B1C1 C1C0"/>
+    <route id="complex_2" edges="A1A2 A2B2 B2B1"/>
+    <route id="complex_3" edges="D0D1 D1C1 C1B1 B1A1"/>
+    <route id="complex_4" edges="A0B0 B0B1 B1C1 C1D1"/>
+    <route id="complex_5" edges="J0J1 J1I1 I1H1 H1G1"/>
+    <route id="complex_6" edges="A7B7 B7C7 C7C6"/>
+    <route id="complex_7" edges="J7J6 J6I6 I6H6 H6G6"/>
+
+    <!-- ============================================ -->
+    <!-- TRAFFIC FLOWS - CITY-WIDE TRAFFIC -->
+    <!-- ============================================ -->
+
+    <!-- PERIOD 1: Early Morning (0-900s) - Light traffic -->
+    <!-- East-West flows -->
+    <flow id="early_ew_0" type="car" begin="0" end="900" route="ew_0_short" probability="0.05" departLane="best"/>
+    <flow id="early_ew_1" type="car" begin="0" end="900" route="ew_1_short" probability="0.06" departLane="best"/>
+    <flow id="early_ew_2" type="car" begin="0" end="900" route="ew_2_short" probability="0.04" departLane="best"/>
+    <flow id="early_ew_3" type="car" begin="0" end="900" route="ew_3_short" probability="0.05" departLane="best"/>
+    <flow id="early_ew_4" type="car" begin="0" end="900" route="ew_4_short" probability="0.04" departLane="best"/>
+    <flow id="early_ew_5" type="car" begin="0" end="900" route="ew_5_short" probability="0.05" departLane="best"/>
+    <flow id="early_ew_6" type="car" begin="0" end="900" route="ew_6_short" probability="0.04" departLane="best"/>
+    <flow id="early_ew_7" type="car" begin="0" end="900" route="ew_7_short" probability="0.06" departLane="best"/>
+
+    <!-- North-South flows -->
+    <flow id="early_ns_a" type="car" begin="0" end="900" route="ns_a_full" probability="0.03" departLane="best"/>
+    <flow id="early_ns_b" type="car" begin="0" end="900" route="ns_b_full" probability="0.04" departLane="best"/>
+    <flow id="early_ns_c" type="car" begin="0" end="900" route="ns_c_full" probability="0.03" departLane="best"/>
+    <flow id="early_ns_d" type="car" begin="0" end="900" route="ns_d_full" probability="0.04" departLane="best"/>
+    <flow id="early_ns_e" type="car" begin="0" end="900" route="ns_e_full" probability="0.03" departLane="best"/>
+    <flow id="early_ns_f" type="car" begin="0" end="900" route="ns_f_full" probability="0.04" departLane="best"/>
+    <flow id="early_ns_g" type="car" begin="0" end="900" route="ns_g_full" probability="0.03" departLane="best"/>
+    <flow id="early_ns_h" type="car" begin="0" end="900" route="ns_h_full" probability="0.04" departLane="best"/>
+    <flow id="early_ns_i" type="car" begin="0" end="900" route="ns_i_full" probability="0.03" departLane="best"/>
+    <flow id="early_ns_j" type="car" begin="0" end="900" route="ns_j_full" probability="0.04" departLane="best"/>
+
+    <!-- Buses -->
+    <flow id="early_buses_ew" type="regular_bus" begin="0" end="900" route="ew_1_short" period="240" departLane="0"/>
+    <flow id="early_buses_ns" type="regular_bus" begin="0" end="900" route="ns_e_full" period="300" departLane="0"/>
+
+    <!-- PERIOD 2: Morning Rush (900-1800s) - Heavy traffic -->
+    <!-- East-West flows -->
+    <flow id="rush_ew_0" type="car" begin="900" end="1800" route="ew_0_medium" probability="0.25" departLane="best"/>
+    <flow id="rush_ew_1" type="car" begin="900" end="1800" route="ew_1_medium" probability="0.30" departLane="best"/>
+    <flow id="rush_ew_2" type="car" begin="900" end="1800" route="ew_2_medium" probability="0.20" departLane="best"/>
+    <flow id="rush_ew_3" type="car" begin="900" end="1800" route="ew_3_medium" probability="0.25" departLane="best"/>
+    <flow id="rush_ew_4" type="car" begin="900" end="1800" route="ew_4_medium" probability="0.20" departLane="best"/>
+    <flow id="rush_ew_5" type="car" begin="900" end="1800" route="ew_5_medium" probability="0.25" departLane="best"/>
+    <flow id="rush_ew_6" type="car" begin="900" end="1800" route="ew_6_medium" probability="0.20" departLane="best"/>
+    <flow id="rush_ew_7" type="car" begin="900" end="1800" route="ew_7_medium" probability="0.30" departLane="best"/>
+
+    <!-- North-South flows -->
+    <flow id="rush_ns_a" type="car" begin="900" end="1800" route="ns_a_full" probability="0.15" departLane="best"/>
+    <flow id="rush_ns_b" type="car" begin="900" end="1800" route="ns_b_full" probability="0.18" departLane="best"/>
+    <flow id="rush_ns_c" type="car" begin="900" end="1800" route="ns_c_full" probability="0.15" departLane="best"/>
+    <flow id="rush_ns_d" type="car" begin="900" end="1800" route="ns_d_full" probability="0.18" departLane="best"/>
+    <flow id="rush_ns_e" type="car" begin="900" end="1800" route="ns_e_full" probability="0.15" departLane="best"/>
+    <flow id="rush_ns_f" type="car" begin="900" end="1800" route="ns_f_full" probability="0.18" departLane="best"/>
+    <flow id="rush_ns_g" type="car" begin="900" end="1800" route="ns_g_full" probability="0.15" departLane="best"/>
+    <flow id="rush_ns_h" type="car" begin="900" end="1800" route="ns_h_full" probability="0.18" departLane="best"/>
+    <flow id="rush_ns_i" type="car" begin="900" end="1800" route="ns_i_full" probability="0.15" departLane="best"/>
+    <flow id="rush_ns_j" type="car" begin="900" end="1800" route="ns_j_full" probability="0.18" departLane="best"/>
+
+    <!-- Short routes for local traffic -->
+    <flow id="rush_short_ew_01" type="car" begin="900" end="1800" route="ew_0_short_ab" probability="0.12" departLane="best"/>
+    <flow id="rush_short_ew_12" type="car" begin="900" end="1800" route="ew_1_short_bc" probability="0.15" departLane="best"/>
+    <flow id="rush_short_ew_23" type="car" begin="900" end="1800" route="ew_2_short_cd" probability="0.12" departLane="best"/>
+    <flow id="rush_short_ew_34" type="car" begin="900" end="1800" route="ew_3_short_de" probability="0.15" departLane="best"/>
+    <flow id="rush_short_ew_45" type="car" begin="900" end="1800" route="ew_4_short_ef" probability="0.12" departLane="best"/>
+    <flow id="rush_short_ew_56" type="car" begin="900" end="1800" route="ew_5_short_fg" probability="0.15" departLane="best"/>
+    <flow id="rush_short_ew_67" type="car" begin="900" end="1800" route="ew_6_short_gh" probability="0.12" departLane="best"/>
+    <flow id="rush_short_ew_78" type="car" begin="900" end="1800" route="ew_7_short_hi" probability="0.15" departLane="best"/>
+
+    <flow id="rush_short_ns_01" type="car" begin="900" end="1800" route="ns_a_short_01" probability="0.08" departLane="best"/>
+    <flow id="rush_short_ns_12" type="car" begin="900" end="1800" route="ns_b_short_12" probability="0.10" departLane="best"/>
+    <flow id="rush_short_ns_23" type="car" begin="900" end="1800" route="ns_c_short_23" probability="0.08" departLane="best"/>
+    <flow id="rush_short_ns_34" type="car" begin="900" end="1800" route="ns_d_short_34" probability="0.10" departLane="best"/>
+    <flow id="rush_short_ns_45" type="car" begin="900" end="1800" route="ns_e_short_45" probability="0.08" departLane="best"/>
+    <flow id="rush_short_ns_56" type="car" begin="900" end="1800" route="ns_f_short_56" probability="0.10" departLane="best"/>
+
+    <!-- Buses -->
+    <flow id="rush_buses_ew" type="regular_bus" begin="900" end="1800" route="ew_1_medium" period="90" departLane="0"/>
+    <flow id="rush_buses_ns" type="regular_bus" begin="900" end="1800" route="ns_e_full" period="120" departLane="0"/>
+    <flow id="rush_accessible" type="accessible_vehicle" begin="900" end="1800" route="ew_3_full" period="400" departLane="0"/>
+
+    <!-- Trucks -->
+    <flow id="rush_trucks_ew" type="truck" begin="900" end="1800" route="ew_0_full" period="180" departLane="0"/>
+    <flow id="rush_trucks_ns" type="truck" begin="900" end="1800" route="ns_j_full" period="200" departLane="0"/>
+
+    <!-- PERIOD 3: Midday (1800-2700s) - Moderate traffic -->
+    <!-- East-West flows -->
+    <flow id="midday_ew_0" type="car" begin="1800" end="2700" route="ew_0_short" probability="0.15" departLane="best"/>
+    <flow id="midday_ew_1" type="car" begin="1800" end="2700" route="ew_1_short" probability="0.18" departLane="best"/>
+    <flow id="midday_ew_2" type="car" begin="1800" end="2700" route="ew_2_short" probability="0.12" departLane="best"/>
+    <flow id="midday_ew_3" type="car" begin="1800" end="2700" route="ew_3_short" probability="0.15" departLane="best"/>
+    <flow id="midday_ew_4" type="car" begin="1800" end="2700" route="ew_4_short" probability="0.12" departLane="best"/>
+    <flow id="midday_ew_5" type="car" begin="1800" end="2700" route="ew_5_short" probability="0.15" departLane="best"/>
+    <flow id="midday_ew_6" type="car" begin="1800" end="2700" route="ew_6_short" probability="0.12" departLane="best"/>
+    <flow id="midday_ew_7" type="car" begin="1800" end="2700" route="ew_7_short" probability="0.18" departLane="best"/>
+
+    <!-- North-South flows -->
+    <flow id="midday_ns_a" type="car" begin="1800" end="2700" route="ns_a_full" probability="0.10" departLane="best"/>
+    <flow id="midday_ns_b" type="car" begin="1800" end="2700" route="ns_b_full" probability="0.12" departLane="best"/>
+    <flow id="midday_ns_c" type="car" begin="1800" end="2700" route="ns_c_full" probability="0.10" departLane="best"/>
+    <flow id="midday_ns_d" type="car" begin="1800" end="2700" route="ns_d_full" probability="0.12" departLane="best"/>
+    <flow id="midday_ns_e" type="car" begin="1800" end="2700" route="ns_e_full" probability="0.10" departLane="best"/>
+    <flow id="midday_ns_f" type="car" begin="1800" end="2700" route="ns_f_full" probability="0.12" departLane="best"/>
+    <flow id="midday_ns_g" type="car" begin="1800" end="2700" route="ns_g_full" probability="0.10" departLane="best"/>
+    <flow id="midday_ns_h" type="car" begin="1800" end="2700" route="ns_h_full" probability="0.12" departLane="best"/>
+    <flow id="midday_ns_i" type="car" begin="1800" end="2700" route="ns_i_full" probability="0.10" departLane="best"/>
+    <flow id="midday_ns_j" type="car" begin="1800" end="2700" route="ns_j_full" probability="0.12" departLane="best"/>
+
+    <!-- Complex routes -->
+    <flow id="midday_complex_1" type="car" begin="1800" end="2700" route="complex_1" probability="0.05" departLane="best"/>
+    <flow id="midday_complex_2" type="car" begin="1800" end="2700" route="complex_2" probability="0.04" departLane="best"/>
+    <flow id="midday_complex_3" type="car" begin="1800" end="2700" route="complex_3" probability="0.05" departLane="best"/>
+    <flow id="midday_complex_4" type="car" begin="1800" end="2700" route="complex_4" probability="0.06" departLane="best"/>
+
+    <!-- Buses -->
+    <flow id="midday_buses_ew" type="regular_bus" begin="1800" end="2700" route="ew_2_short" period="150" departLane="0"/>
+    <flow id="midday_buses_ns" type="regular_bus" begin="1800" end="2700" route="ns_d_full" period="180" departLane="0"/>
+
+    <!-- PERIOD 4: Evening Rush (2700-3600s) - Heavy traffic -->
+    <!-- East-West flows -->
+    <flow id="evening_ew_0" type="car" begin="2700" end="3600" route="ew_0_medium" probability="0.22" departLane="best"/>
+    <flow id="evening_ew_1" type="car" begin="2700" end="3600" route="ew_1_medium" probability="0.28" departLane="best"/>
+    <flow id="evening_ew_2" type="car" begin="2700" end="3600" route="ew_2_medium" probability="0.18" departLane="best"/>
+    <flow id="evening_ew_3" type="car" begin="2700" end="3600" route="ew_3_medium" probability="0.22" departLane="best"/>
+    <flow id="evening_ew_4" type="car" begin="2700" end="3600" route="ew_4_medium" probability="0.18" departLane="best"/>
+    <flow id="evening_ew_5" type="car" begin="2700" end="3600" route="ew_5_medium" probability="0.22" departLane="best"/>
+    <flow id="evening_ew_6" type="car" begin="2700" end="3600" route="ew_6_medium" probability="0.18" departLane="best"/>
+    <flow id="evening_ew_7" type="car" begin="2700" end="3600" route="ew_7_medium" probability="0.28" departLane="best"/>
+
+    <!-- North-South flows -->
+    <flow id="evening_ns_a" type="car" begin="2700" end="3600" route="ns_a_full" probability="0.14" departLane="best"/>
+    <flow id="evening_ns_b" type="car" begin="2700" end="3600" route="ns_b_full" probability="0.16" departLane="best"/>
+    <flow id="evening_ns_c" type="car" begin="2700" end="3600" route="ns_c_full" probability="0.14" departLane="best"/>
+    <flow id="evening_ns_d" type="car" begin="2700" end="3600" route="ns_d_full" probability="0.16" departLane="best"/>
+    <flow id="evening_ns_e" type="car" begin="2700" end="3600" route="ns_e_full" probability="0.14" departLane="best"/>
+    <flow id="evening_ns_f" type="car" begin="2700" end="3600" route="ns_f_full" probability="0.16" departLane="best"/>
+    <flow id="evening_ns_g" type="car" begin="2700" end="3600" route="ns_g_full" probability="0.14" departLane="best"/>
+    <flow id="evening_ns_h" type="car" begin="2700" end="3600" route="ns_h_full" probability="0.16" departLane="best"/>
+    <flow id="evening_ns_i" type="car" begin="2700" end="3600" route="ns_i_full" probability="0.14" departLane="best"/>
+    <flow id="evening_ns_j" type="car" begin="2700" end="3600" route="ns_j_full" probability="0.16" departLane="best"/>
+
+    <!-- Short routes -->
+    <flow id="evening_short_ew_01" type="car" begin="2700" end="3600" route="ew_0_short_ab" probability="0.10" departLane="best"/>
+    <flow id="evening_short_ew_12" type="car" begin="2700" end="3600" route="ew_1_short_bc" probability="0.12" departLane="best"/>
+    <flow id="evening_short_ew_23" type="car" begin="2700" end="3600" route="ew_2_short_cd" probability="0.10" departLane="best"/>
+    <flow id="evening_short_ew_34" type="car" begin="2700" end="3600" route="ew_3_short_de" probability="0.12" departLane="best"/>
+    <flow id="evening_short_ew_45" type="car" begin="2700" end="3600" route="ew_4_short_ef" probability="0.10" departLane="best"/>
+    <flow id="evening_short_ew_56" type="car" begin="2700" end="3600" route="ew_5_short_fg" probability="0.12" departLane="best"/>
+    <flow id="evening_short_ew_67" type="car" begin="2700" end="3600" route="ew_6_short_gh" probability="0.10" departLane="best"/>
+    <flow id="evening_short_ew_78" type="car" begin="2700" end="3600" route="ew_7_short_hi" probability="0.12" departLane="best"/>
+
+    <!-- Buses -->
+    <flow id="evening_buses_ew" type="regular_bus" begin="2700" end="3600" route="ew_1_medium" period="100" departLane="0"/>
+    <flow id="evening_buses_ns" type="regular_bus" begin="2700" end="3600" route="ns_e_full" period="130" departLane="0"/>
+    <flow id="evening_accessible" type="accessible_vehicle" begin="2700" end="3600" route="ew_3_full" period="350" departLane="0"/>
+
+    <!-- Trucks -->
+    <flow id="evening_trucks_ew" type="truck" begin="2700" end="3600" route="ew_0_full" period="160" departLane="0"/>
+    <flow id="evening_trucks_ns" type="truck" begin="2700" end="3600" route="ns_j_full" period="180" departLane="0"/>
+
+    <!-- EMERGENCY VEHICLES (all day) -->
+    <flow id="emergency_ew" type="emergency" begin="100" end="3600" route="ew_1_full" period="600" departLane="free" departSpeed="max"/>
+    <flow id="emergency_ns" type="emergency" begin="200" end="3600" route="ns_e_full" period="700" departLane="free" departSpeed="max"/>
+    <flow id="emergency_complex" type="emergency" begin="300" end="3600" route="complex_3" period="800" departLane="free" departSpeed="max"/>
+
+    <!-- DIAGONAL TRAFFIC -->
+    <flow id="diag_flow_1" type="car" begin="0" end="3600" route="diag_a0_b1" probability="0.03" departLane="best"/>
+    <flow id="diag_flow_2" type="car" begin="0" end="3600" route="diag_b1_c2" probability="0.03" departLane="best"/>
+    <flow id="diag_flow_3" type="car" begin="0" end="3600" route="diag_c1_d2" probability="0.03" departLane="best"/>
+    <flow id="diag_flow_4" type="car" begin="0" end="3600" route="diag_d1_e2" probability="0.03" departLane="best"/>
+    <flow id="diag_flow_5" type="car" begin="0" end="3600" route="diag_e1_f2" probability="0.03" departLane="best"/>
+    <flow id="diag_flow_6" type="car" begin="0" end="3600" route="diag_f1_g2" probability="0.03" departLane="best"/>
+    <flow id="diag_flow_7" type="car" begin="0" end="3600" route="diag_g1_h2" probability="0.03" departLane="best"/>
+    <flow id="diag_flow_8" type="car" begin="0" end="3600" route="diag_h1_i2" probability="0.03" departLane="best"/>
+    <flow id="diag_flow_9" type="car" begin="0" end="3600" route="diag_i1_j2" probability="0.03" departLane="best"/>
+
+</routes>

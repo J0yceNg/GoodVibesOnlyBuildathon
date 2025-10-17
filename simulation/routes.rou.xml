@@ -1,5 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <routes>
-    <vType id="car" accel="1.0" decel="5.0" sigma="0.5" length="5.0" minGap="2.5" maxSpeed="13.9"/>
-    <route id="r0" edges="road0"/>
-    <vehicle id="veh0" type="car" route="r0" depart="0"/>
+    <!-- Vehicle Types -->
+    <vType id="car" vClass="passenger" color="0.8,0.8,0.8" length="5" maxSpeed="22.22" accel="2.6" decel="4.5" sigma="0.5">
+        <param key="priority" value="1"/>
+    </vType>
+    
+    <vType id="regular_bus" vClass="bus" color="0,0.8,0" length="12" width="2.5" maxSpeed="15" accel="1.2" decel="3.0" sigma="0.3">
+        <param key="priority" value="2"/>
+    </vType>
+    
+    <vType id="olympic_shuttle" vClass="bus" color="1,0.84,0" length="12" width="2.5" maxSpeed="18" accel="1.5" decel="3.0" sigma="0.2">
+        <param key="priority" value="3"/>
+        <param key="is_olympic" value="true"/>
+    </vType>
+    
+    <vType id="accessible_vehicle" vClass="bus" color="0,0.5,1" length="10" width="2.4" maxSpeed="15" accel="1.2" decel="3.0" sigma="0.2">
+        <param key="priority" value="4"/>
+        <param key="is_accessible" value="true"/>
+    </vType>
+    
+    <vType id="emergency" vClass="emergency" color="1,0,0" length="7" maxSpeed="25" accel="2.5" decel="4.5" sigma="0.1">
+        <param key="priority" value="5"/>
+        <param key="is_emergency" value="true"/>
+    </vType>
+    
+    <vType id="taxi" vClass="taxi" color="1,0.5,0" length="4.5" maxSpeed="20" accel="2.8" decel="4.0" sigma="0.3">
+        <param key="priority" value="2"/>
+    </vType>
+    <vType id="delivery_van" vClass="truck" color="0.5,0.5,0.5" length="7" maxSpeed="18" accel="2.0" decel="3.5" sigma="0.25">
+        <param key="priority" value="3"/>
+    </vType>
+
+    <!-- ============================================ -->
+    <!-- MAIN OLYMPIC CORRIDOR ROUTES (Row 1 - Middle) -->
+    <!-- ============================================ -->
+    
+    <!-- East-West routes -->
+    <route id="olympic_short_ew" edges="A1B1 B1C1"/>
+    <route id="olympic_long_ew" edges="A1B1 B1C1 C1D1"/>
+    <route id="olympic_full_ew" edges="A1B1 B1C1 C1D1 D1E1 E1F1"/>
+    
+    <!-- West-East routes -->
+    <route id="olympic_short_we" edges="C1B1 B1A1"/>
+    <route id="olympic_long_we" edges="D1C1 C1B1 B1A1"/>
+    <route id="olympic_full_we" edges="F1E1 E1D1 D1C1 C1B1 B1A1"/>
+    
+    <!-- Extended Routes -->
+    <route id="extended_olympic_loop" edges="A1B1 B1C1 C1D1 D1E1 E1F1 F1G1 G1H1 H1I1 I1J1 J1A1"/>
+    <route id="railway_around" edges="A0B0 B0B1 B1B2 B2C2 C2C3 D3D4"/>
+    
+    <!-- Routes with turns (realistic) -->
+    <route id="olympic_turn_north_b" edges="A1B1 B1B2"/>
+    <route id="olympic_turn_south_b" edges="A1B1 B1B0"/>
+    <route id="olympic_turn_north_c" edges="B1C1 C1C2"/>
+    <route id="olympic_turn_south_c" edges="B1C1 C1C0"/>
+    
+    <!-- ============================================ -->
+    <!-- NORTH STREET ROUTES (Row 2) -->
+    <!-- ============================================ -->
+    <route id="north_ew" edges="A2B2 B2C2 C2D2 D2E2"/>
+    <route id="north_we" edges="E2D2 D2C2 C2B2 B2A2"/>
+    <route id="north_short" edges="A2B2 B2C2"/>
+    <route id="north_turn_south" edges="A2B2 B2B1"/>
+    
+    <!-- ============================================ -->
+    <!-- SOUTH STREET ROUTES (Row 0) -->
+    <!-- ============================================ -->
+    <route id="south_ew" edges="A0B0 B0C0 C0D0 D0E0"/>
+    <route id="south_we" edges="E0D0 D0C0 C0B0 B0A0"/>
+    <route id="south_short" edges="A0B0 B0C0"/>
+    <route id="south_turn_north" edges="A0B0 B0B1"/>
+    
+    <!-- ============================================ -->
+    <!-- NORTH-SOUTH CROSS ROUTES -->
+    <!-- ============================================ -->
+    <route id="cross_a_ns" edges="A0A1 A1A2 A2A3"/>
+    <route id="cross_a_sn" edges="A3A2 A2A1 A1A0"/>
+    <route id="cross_b_ns" edges="B0B1 B1B2 B2B3"/>
+    <route id="cross_b_sn" edges="B3B2 B2B1 B1B0"/>
+    
+    <!-- ============================================ -->
+    <!-- COMPLEX MULTI-TURN ROUTES (Very Realistic) -->
+    <!-- ============================================ -->
+    <route id="complex_1" edges="A0A1 A1B1 B1C1 C1C0"/>
+    <route id="complex_2" edges="A2A1 A1B1 B1B0"/>
+    <route id="complex_3" edges="D0D1 D1C1 C1B1 B1A1"/>
+    <route id="complex_4" edges="A0B0 B0B1 B1C1 C1D1"/>
+    
+    <!-- ============================================ -->
+    <!-- Additional routes added -->
+    <route id="downtown_loop" edges="D3D4 D4D5 D5D6 D6D3"/>
+    <route id="outer_loop" edges="A1A2 A2B2 B2B3 B3C3 C3C4 C4D4 D4D5"/>
+    <route id="bus_express" edges="E1F1 F1G1 G1H1 H1I1"/>
+    
+    <!-- ============================================ -->
+    <!-- TRAFFIC FLOWS - OLYMPIC CORRIDOR (Priority) -->
+    <!-- ============================================ -->
+    
+    <!-- PERIOD 1: Early Morning (0-900s) -->
+    <flow id="early_olympic_ew_1" type="car" begin="0" end="900" route="olympic_long_ew" probability="0.12" departLane="best"/>
+    <flow id="early_olympic_we_1" type="car" begin="0" end="900" route="olympic_long_we" probability="0.11" departLane="best"/>
+    <flow id="early_olympic_turns" type="car" begin="0" end="900" route="olympic_turn_north_b" probability="0.05" departLane="best"/>
+    <flow id="early_buses" type="regular_bus" begin="0" end="900" route="olympic_full_ew" period="150" departLane="0"/>
+    
+    <!-- PERIOD 2: Morning Rush (900-1800s) -->
+    <flow id="rush_olympic_ew" type="car" begin="900" end="1800" route="olympic_long_ew" probability="0.55" departLane="best"/>
+    <flow id="rush_olympic_we" type="car" begin="900" end="1800" route="olympic_long_we" probability="0.52" departLane="best"/>
+    <flow id="rush_olympic_short" type="car" begin="900" end="1800" route="olympic_short_ew" probability="0.18" departLane="best"/>
+    <flow id="rush_olympic_turns" type="car" begin="900" end="1800" route="olympic_turn_south_c" probability="0.13" departLane="best"/>
+    <flow id="rush_buses" type="regular_bus" begin="900" end="1800" route="olympic_full_ew" period="75" departLane="0"/>
+    <flow id="rush_accessible" type="accessible_vehicle" begin="900" end="1800" route="olympic_full_ew" period="200" departLane="0"/>
+    
+    <!-- PERIOD 3: Olympic Event (1800-2700s) - HIGH PRIORITY -->
+    <flow id="event_olympic_ew" type="car" begin="1800" end="2700" route="olympic_long_ew" probability="0.28" departLane="best"/>
+    <flow id="event_olympic_we" type="car" begin="1800" end="2700" route="olympic_long_we" probability="0.25" departLane="best"/>
+    <flow id="event_buses" type="regular_bus" begin="1800" end="2700" route="olympic_full_ew" period="105" departLane="0"/>
+    
+    <!-- OLYMPIC SHUTTLES - Very high frequency -->
+    <flow id="event_shuttle_ew" type="olympic_shuttle" begin="1800" end="2700" route="olympic_full_ew" period="30" departLane="0"/>
+    <flow id="event_shuttle_we" type="olympic_shuttle" begin="1800" end="2700" route="olympic_full_we" period="35" departLane="0"/>
+    
+    <!-- ACCESSIBLE VEHICLES - More frequent -->
+    <flow id="event_accessible_ew" type="accessible_vehicle" begin="1800" end="2700" route="olympic_full_ew" period="55" departLane="0"/>
+    <flow id="event_accessible_we" type="accessible_vehicle" begin="1800" end="2700" route="olympic_full_we" period="60" departLane="0"/>
+    
+    <!-- PERIOD 4: Evening (2700-3600s) -->
+    <flow id="evening_olympic_ew" type="car" begin="2700" end="3600" route="olympic_long_ew" probability="0.22" departLane="best"/>
+    <flow id="evening_olympic_we" type="car" begin="2700" end="3600" route="olympic_long_we" probability="0.18" departLane="best"/>
+    <flow id="evening_buses" type="regular_bus" begin="2700" end="3600" route="olympic_full_ew" period="140" departLane="0"/>
+    <flow id="evening_shuttles" type="olympic_shuttle" begin="2700" end="3600" route="olympic_full_ew" period="200" departLane="0"/>
+    
+    <!-- EMERGENCY VEHICLES (all day) -->
+    <flow id="emergency_olympic" type="emergency" begin="100" end="3600" route="olympic_full_ew" period="480" departLane="free" departSpeed="max"/>
+    <flow id="emergency_complex" type="emergency" begin="250" end="3600" route="complex_3" period="540" departLane="free" departSpeed="max"/>
+    
+    <!-- Additional background street traffic flows -->
+    <flow id="north_cars_ew" type="car" begin="0" end="3600" route="north_ew" probability="0.20" departLane="best"/>
+    <flow id="north_cars_we" type="car" begin="0" end="3600" route="north_we" probability="0.18" departLane="best"/>
+    <flow id="south_cars_ew" type="car" begin="0" end="3600" route="south_ew" probability="0.22" departLane="best"/>
+    <flow id="south_cars_we" type="car" begin="0" end="3600" route="south_we" probability="0.21" departLane="best"/>
+    
+    <!-- Extended complex routes -->
+    <flow id="complex_route_1" type="car" begin="0" end="3600" route="complex_1" probability="0.11" departLane="best"/>
+    <flow id="complex_route_2" type="car" begin="0" end="3600" route="complex_2" probability="0.09" departLane="best"/>
+    <flow id="complex_route_3" type="car" begin="0" end="3600" route="complex_3" probability="0.07" departLane="best"/>
+    <flow id="complex_route_4" type="car" begin="0" end="3600" route="complex_4" probability="0.10" departLane="best"/>
 </routes>
