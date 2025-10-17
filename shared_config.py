@@ -34,6 +34,14 @@ class LiveConfig:
     min_green_time: int = 15   # seconds
     max_green_time: int = 60   # seconds
     extension_time: int = 10   # seconds per priority vehicle
+
+    # --- Runtime state (for controller lifecycle) ---
+    _running: bool = True
+    _paused: bool = False
+    _restart: bool = False
+    _stop: bool = False
+    _speed: float = 1.0
+    _current_step: int = 0
     
     # Thread lock for safe updates
     _lock: threading.Lock = field(default_factory=threading.Lock, repr=False)
@@ -126,6 +134,81 @@ class LiveConfig:
             self.max_green_time = 60
             self.extension_time = 10
             print("[CONFIG] Reset to default values")
+
+        # === LIFECYCLE / RUNTIME HOOKS (used by controller) ===
+
+    # start/stop/restart
+    def start_simulation(self):
+        with self._lock:
+            self._running = True
+            self._paused = False
+            self._stop = False
+            self._restart = False
+            self._current_step = 0
+            print("[CONFIG] Simulation started")
+
+    def mark_simulation_stopped(self):
+        with self._lock:
+            self._running = False
+            print("[CONFIG] Simulation stopped")
+
+    def is_simulation_running(self) -> bool:
+        with self._lock:
+            return self._running and not self._stop
+
+    def should_simulation_stop(self) -> bool:
+        with self._lock:
+            return self._stop
+
+    def should_simulation_restart(self) -> bool:
+        with self._lock:
+            return self._restart
+
+    # pause/resume
+    def pause_simulation(self):
+        with self._lock:
+            self._paused = True
+            print("[CONFIG] Simulation paused")
+
+    def resume_simulation(self):
+        with self._lock:
+            self._paused = False
+            print("[CONFIG] Simulation resumed")
+
+    def is_simulation_paused(self) -> bool:
+        with self._lock:
+            return self._paused
+
+    # external signals (e.g., from API/UI)
+    def request_stop(self):
+        with self._lock:
+            self._stop = True
+            print("[CONFIG] Stop requested")
+
+    def request_restart(self):
+        with self._lock:
+            self._restart = True
+            print("[CONFIG] Restart requested")
+
+    # speed/step (used for pacing and simple telemetry)
+    def set_simulation_speed(self, speed: float):
+        with self._lock:
+            if speed <= 0:
+                speed = 1.0
+            self._speed = float(speed)
+            print(f"[CONFIG] Simulation speed set to {self._speed}x")
+
+    def get_simulation_speed(self) -> float:
+        with self._lock:
+            return self._speed
+
+    def update_current_step(self, step: int):
+        with self._lock:
+            self._current_step = int(step)
+
+    def get_current_step(self) -> int:
+        with self._lock:
+            return self._current_step
 
 
 # Global instance - shared between FastAPI and simulation
