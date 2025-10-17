@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- GUI Settings for better visualization -->
+<viewsettings>
+    <scheme name="real world">
+        <background backgroundColor="0.00,0.00,0.00" showGrid="0"/>
+    </scheme>
+
+    <scheme name="olympic_view">
+        <opengl antialiase="1" dither="1"/>
+        <background backgroundColor="0.95,0.95,0.95" showGrid="0" gridXSize="100.00" gridYSize="100.00"/>
+        
+        <edges laneEdgeMode="0" scaleMode="0" laneShowBorders="1" showLinkDecals="1" 
+               showLinkRules="1" showRails="1" hideConnectors="0" widthExaggeration="1.0"
+               minSize="0.0" showDirection="0"/>
+        
+        <vehicles vehicleMode="0" vehicleQuality="2" minSize="1.0" vehicleExaggeration="1.0"
+                  showBlinker="1" drawMinGap="0" showBTRange="0" showRouteIndex="0"
+                  scaleLength="1" showParkingInfo="0"/>
+        
+        <junctions junctionMode="0" drawLinkTLIndex="0" drawLinkJunctionIndex="0"
+                   drawCrossingsAndWalkingareas="1" minSize="3.0" junctionExaggeration="1.0"
+                   showLane2Lane="0" drawJunctionShape="1" drawCrossingsAndWalkingAreas="1"/>
+        
+        <additionals addMode="0" minSize="1.0" addExaggeration="1.0"/>
+        
+        <legend showSizeLegend="1"/>
+    </scheme>
+
+    <delay value="50"/>
+    <viewport zoom="150.00" x="600.00" y="50.00" angle="0.00"/>
+</viewsettings>

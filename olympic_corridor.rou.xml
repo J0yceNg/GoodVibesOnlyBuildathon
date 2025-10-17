@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- LA Olympic Corridor Routes and Vehicle Types -->
+<routes xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/routes_file.xsd">
+
+    <!-- Vehicle Type Definitions -->
+    
+    <!-- Regular passenger car -->
+    <vType id="car" vClass="passenger" color="0.8,0.8,0.8" length="5" maxSpeed="22.22" accel="2.6" decel="4.5" sigma="0.5">
+        <param key="has.rerouting.device" value="false"/>
+    </vType>
+    
+    <!-- Regular public bus -->
+    <vType id="regular_bus" vClass="bus" color="0,0.8,0" length="12" width="2.5" maxSpeed="15" accel="1.2" decel="3.0" sigma="0.3">
+        <param key="has.rerouting.device" value="false"/>
+        <param key="priority" value="2"/>
+    </vType>
+    
+    <!-- Olympic shuttle (higher priority) -->
+    <vType id="olympic_shuttle" vClass="bus" color="1,0.84,0" length="12" width="2.5" maxSpeed="18" accel="1.5" decel="3.0" sigma="0.2">
+        <param key="has.rerouting.device" value="false"/>
+        <param key="priority" value="3"/>
+        <param key="is_olympic" value="true"/>
+    </vType>
+    
+    <!-- Accessible vehicle (special needs, highest non-emergency priority) -->
+    <vType id="accessible_vehicle" vClass="bus" color="0,0.5,1" length="10" width="2.4" maxSpeed="15" accel="1.2" decel="3.0" sigma="0.2">
+        <param key="has.rerouting.device" value="false"/>
+        <param key="priority" value="4"/>
+        <param key="is_accessible" value="true"/>
+    </vType>
+    
+    <!-- Emergency vehicle (ambulance, fire truck) -->
+    <vType id="emergency" vClass="emergency" color="1,0,0" length="7" maxSpeed="25" accel="2.5" decel="4.5" sigma="0.1">
+        <param key="has.rerouting.device" value="false"/>
+        <param key="priority" value="5"/>
+        <param key="is_emergency" value="true"/>
+    </vType>
+
+    <!-- Route Definitions -->
+    <route id="route_main_ew" edges="E0 E1 E2 E3" color="yellow"/>
+    <route id="route_main_we" edges="E3_return E2_return E1_return E0_return" color="cyan"/>
+    <route id="route_cross_1" edges="E1_N E1_S" color="magenta"/>
+    <route id="route_cross_2" edges="E2_N E2_S" color="magenta"/>
+    <route id="route_cross_3" edges="E3_N E3_S" color="magenta"/>
+
+    <!-- Traffic Flows - Time-based patterns (3600 seconds = 1 hour simulation) -->
+    
+    <!-- PERIOD 1: Early Morning (0-900s) - Light traffic -->
+    <flow id="early_cars_ew" type="car" begin="0" end="900" route="route_main_ew" probability="0.15" departLane="best" departSpeed="max"/>
+    <flow id="early_cars_we" type="car" begin="0" end="900" route="route_main_we" probability="0.15" departLane="best" departSpeed="max"/>
+    <flow id="early_buses" type="regular_bus" begin="0" end="900" route="route_main_ew" period="120" departLane="0"/>
+    
+    <!-- PERIOD 2: Morning Rush (900-1800s) - Heavy car traffic, regular buses -->
+    <flow id="rush_cars_ew" type="car" begin="900" end="1800" route="route_main_ew" probability="0.35" departLane="best" departSpeed="max"/>
+    <flow id="rush_cars_we" type="car" begin="900" end="1800" route="route_main_we" probability="0.35" departLane="best" departSpeed="max"/>
+    <flow id="rush_buses" type="regular_bus" begin="900" end="1800" route="route_main_ew" period="60" departLane="0"/>
+    <flow id="rush_cross_cars" type="car" begin="900" end="1800" route="route_cross_1" probability="0.20"/>
+    
+    <!-- PERIOD 3: Olympic Event Period (1800-2700s) - High Olympic shuttles, accessible vehicles -->
+    <flow id="event_cars_ew" type="car" begin="1800" end="2700" route="route_main_ew" probability="0.25" departLane="best" departSpeed="max"/>
+    <flow id="event_cars_we" type="car" begin="1800" end="2700" route="route_main_we" probability="0.25" departLane="best" departSpeed="max"/>
+    <flow id="event_buses" type="regular_bus" begin="1800" end="2700" route="route_main_ew" period="90" departLane="0"/>
+    
+    <!-- Olympic shuttles - frequent during event -->
+    <flow id="event_olympic_ew" type="olympic_shuttle" begin="1800" end="2700" route="route_main_ew" period="45" departLane="0"/>
+    <flow id="event_olympic_we" type="olympic_shuttle" begin="1800" end="2700" route="route_main_we" period="50" departLane="0"/>
+    
+    <!-- Accessible vehicles - critical during event -->
+    <flow id="event_accessible_ew" type="accessible_vehicle" begin="1800" end="2700" route="route_main_ew" period="80" departLane="0"/>
+    <flow id="event_accessible_we" type="accessible_vehicle" begin="1800" end="2700" route="route_main_we" period="85" departLane="0"/>
+    
+    <!-- Cross traffic during event -->
+    <flow id="event_cross_1" type="car" begin="1800" end="2700" route="route_cross_1" probability="0.15"/>
+    <flow id="event_cross_2" type="car" begin="1800" end="2700" route="route_cross_2" probability="0.15"/>
+    <flow id="event_cross_3" type="car" begin="1800" end="2700" route="route_cross_3" probability="0.15"/>
+    
+    <!-- PERIOD 4: Evening (2700-3600s) - Moderate traffic -->
+    <flow id="evening_cars_ew" type="car" begin="2700" end="3600" route="route_main_ew" probability="0.20" departLane="best" departSpeed="max"/>
+    <flow id="evening_cars_we" type="car" begin="2700" end="3600" route="route_main_we" probability="0.20" departLane="best" departSpeed="max"/>
+    <flow id="evening_buses" type="regular_bus" begin="2700" end="3600" route="route_main_ew" period="100" departLane="0"/>
+    <flow id="evening_olympic" type="olympic_shuttle" begin="2700" end="3600" route="route_main_ew" period="150" departLane="0"/>
+    
+    <!-- Emergency vehicles - random throughout day -->
+    <flow id="emergency_random_ew" type="emergency" begin="0" end="3600" route="route_main_ew" period="600" departLane="free" departSpeed="max"/>
+    <flow id="emergency_random_we" type="emergency" begin="50" end="3600" route="route_main_we" period="650" departLane="free" departSpeed="max"/>
+
+</routes>

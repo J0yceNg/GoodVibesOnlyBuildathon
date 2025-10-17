@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<routes>
+    <vType id="car" vClass="passenger" color="0.8,0.8,0.8"/>
+    <vType id="regular_bus" vClass="bus" color="0,0.8,0" length="12"/>
+    <vType id="olympic_shuttle" vClass="bus" color="1,0.84,0" length="12"/>
+    <vType id="accessible_vehicle" vClass="bus" color="0,0.5,1" length="10"/>
+    <vType id="emergency" vClass="emergency" color="1,0,0"/>
+    
+    <route id="route_forward" edges="A0B0 B0C0 C0D0"/>
+    <route id="route_backward" edges="D0C0 C0B0 B0A0"/>
+    
+    <flow id="cars_fwd" type="car" begin="0" end="1000" probability="0.3" route="route_forward"/>
+    <flow id="cars_back" type="car" begin="0" end="1000" probability="0.2" route="route_backward"/>
+    <flow id="buses" type="regular_bus" begin="0" end="1000" period="120" route="route_forward"/>
+    <flow id="shuttles" type="olympic_shuttle" begin="0" end="1000" period="60" route="route_forward"/>
+    <flow id="accessible" type="accessible_vehicle" begin="0" end="1000" period="180" route="route_forward"/>
+    <flow id="emerg" type="emergency" begin="100" end="1000" period="300" route="route_forward"/>
+</routes>

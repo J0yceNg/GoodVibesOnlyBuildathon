@@ -1,0 +1,35 @@
+# Exclude numo directory
+numo/
+
+# Python virtual environment
+fairlane_env/
+bin/
+include/
+lib/
+pyvenv.cfg
+
+# Python cache files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Distribution / packaging
+dist/
+build/
+*.egg-info/
+
+# IDE settings
+.vscode/
+.idea/
+*.swp
+.DS_Store
+
+# Environment variables
+.env
+
+# Logs
+*.log
+
+# SUMO generated files
+*.log
+*.xml.gz
