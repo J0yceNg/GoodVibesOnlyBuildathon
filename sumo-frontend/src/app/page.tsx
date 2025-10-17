@@ -98,6 +98,17 @@ type SimulationUpdate = {
 
 type MessageData = NetworkInfo | SimulationUpdate;
 
+// Vehicle type configuration - matches SUMO route definitions
+const VEHICLE_TYPES = {
+  car: { color: '#3b82f6', label: 'Car', icon: '🚗' },
+  regular_bus: { color: '#10b981', label: 'Regular Bus', icon: '🚌' },
+  olympic_shuttle: { color: '#fbbf24', label: 'Olympic Shuttle', icon: '🚐' },
+  accessible_vehicle: { color: '#06b6d4', label: 'Accessible Vehicle', icon: '♿' },
+  emergency: { color: '#ef4444', label: 'Emergency', icon: '🚑' }
+} as const;
+
+type VehicleType = keyof typeof VEHICLE_TYPES;
+
 export default function SUMODashboard() {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const [connected, setConnected] = useState(false);
@@ -125,6 +136,11 @@ export default function SUMODashboard() {
     extension: 5
   });
   const [apiStatus, setApiStatus] = useState<string>('');
+  const [simStatus, setSimStatus] = useState({
+    running: false,
+    paused: false,
+    speed: 3.0  // Default to 3x speed for faster simulation
+  });
   
   // Canvas drawing parameters
   const scale = useRef(1);
@@ -861,6 +877,11 @@ export default function SUMODashboard() {
     ws.onopen = () => {
       setConnected(true);
       console.log('✅ WebSocket connected successfully');
+      
+      // Automatically set simulation speed to 3x on connection
+      setTimeout(() => {
+        setSimulationSpeed(3.0);
+      }, 1000);
     };
 
     ws.onmessage = (event: MessageEvent<string>) => {
@@ -878,6 +899,18 @@ export default function SUMODashboard() {
           setNetworkData(data.data);
         } else if (data.type === 'simulation_update') {
           console.log('🚗 Simulation update received');
+          
+          // Log unique vehicle types to verify all are recognized
+          if (data.vehicles && data.vehicles.length > 0) {
+            const uniqueTypes = new Set(data.vehicles.map(v => v.type));
+            const typeStats = Array.from(uniqueTypes).map(type => ({
+              type,
+              count: data.vehicles.filter(v => v.type === type).length,
+              recognized: type in VEHICLE_TYPES
+            }));
+            console.log('🚙 Vehicle types in frame:', typeStats);
+          }
+          
           setSimData(data);
         } else {
           console.warn('⚠️ Unknown message type:', (data as any).type);
@@ -912,20 +945,13 @@ export default function SUMODashboard() {
 
   // Helper functions
   const getVehicleColorByType = (type: string): string => {
-    switch (type) {
-      case 'car':
-        return '#3b82f6'; // Blue for cars
-      case 'regular_bus':
-        return '#10b981'; // Green for regular buses
-      case 'olympic_shuttle':
-        return '#fbbf24'; // Gold for Olympic shuttles
-      case 'accessible_vehicle':
-        return '#06b6d4'; // Cyan for accessible vehicles
-      case 'emergency':
-        return '#ef4444'; // Red for emergency vehicles
-      default:
-        return '#9ca3af'; // Gray for unknown
+    // Check if it's a known vehicle type
+    if (type in VEHICLE_TYPES) {
+      return VEHICLE_TYPES[type as VehicleType].color;
     }
+    // Default color for unknown types
+    console.warn(`Unknown vehicle type: ${type}`);
+    return '#9ca3af'; // Gray for unknown
   };
 
   const getVehicleColor = (speed: number): string => {
@@ -1062,6 +1088,100 @@ export default function SUMODashboard() {
     }
   };
 
+  // Simulation Control Functions
+  const startSimulation = async () => {
+    try {
+      const response = await fetch(`${API_BASE_URL}/api/simulation/start`, { method: 'POST' });
+      const data = await response.json();
+      if (data.success) {
+        setApiStatus('✅ Simulation started');
+        setSimStatus({...simStatus, running: true, paused: false});
+        setTimeout(() => setApiStatus(''), 3000);
+      }
+    } catch (error) {
+      setApiStatus('❌ Error starting simulation');
+      setTimeout(() => setApiStatus(''), 3000);
+    }
+  };
+
+  const stopSimulation = async () => {
+    try {
+      const response = await fetch(`${API_BASE_URL}/api/simulation/stop`, { method: 'POST' });
+      const data = await response.json();
+      if (data.success) {
+        setApiStatus('✅ Simulation stopped');
+        setSimStatus({...simStatus, running: false, paused: false});
+        setTimeout(() => setApiStatus(''), 3000);
+      }
+    } catch (error) {
+      setApiStatus('❌ Error stopping simulation');
+      setTimeout(() => setApiStatus(''), 3000);
+    }
+  };
+
+  const pauseSimulation = async () => {
+    try {
+      const response = await fetch(`${API_BASE_URL}/api/simulation/pause`, { method: 'POST' });
+      const data = await response.json();
+      if (data.success) {
+        setApiStatus('⏸️ Simulation paused');
+        setSimStatus({...simStatus, paused: true});
+        setTimeout(() => setApiStatus(''), 3000);
+      }
+    } catch (error) {
+      setApiStatus('❌ Error pausing simulation');
+      setTimeout(() => setApiStatus(''), 3000);
+    }
+  };
+
+  const resumeSimulation = async () => {
+    try {
+      const response = await fetch(`${API_BASE_URL}/api/simulation/resume`, { method: 'POST' });
+      const data = await response.json();
+      if (data.success) {
+        setApiStatus('▶️ Simulation resumed');
+        setSimStatus({...simStatus, paused: false});
+        setTimeout(() => setApiStatus(''), 3000);
+      }
+    } catch (error) {
+      setApiStatus('❌ Error resuming simulation');
+      setTimeout(() => setApiStatus(''), 3000);
+    }
+  };
+
+  const restartSimulation = async () => {
+    try {
+      const response = await fetch(`${API_BASE_URL}/api/simulation/restart`, { method: 'POST' });
+      const data = await response.json();
+      if (data.success) {
+        setApiStatus('🔄 Simulation restarting');
+        setTimeout(() => setApiStatus(''), 3000);
+      }
+    } catch (error) {
+      setApiStatus('❌ Error restarting simulation');
+      setTimeout(() => setApiStatus(''), 3000);
+    }
+  };
+
+  const setSimulationSpeed = async (speed: number) => {
+    try {
+      const response = await fetch(`${API_BASE_URL}/api/simulation/speed`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ speed }),
+      });
+      const data = await response.json();
+      if (data.success) {
+        setSimStatus({...simStatus, speed: data.speed});
+        setApiStatus(`⚡ Speed set to ${data.speed}x`);
+        setTimeout(() => setApiStatus(''), 3000);
+      }
+    } catch (error) {
+      setApiStatus('❌ Error setting speed');
+      setTimeout(() => setApiStatus(''), 3000);
+    }
+  };
+
   return (
     <div className="relative w-full h-screen bg-gray-900 overflow-hidden">
       {/* Canvas */}
@@ -1165,9 +1285,29 @@ export default function SUMODashboard() {
           }}
         >
           <div className="bg-gray-800 p-3 rounded-lg text-sm shadow-2xl border border-cyan-500">
-            <div className="font-bold text-cyan-400 mb-2">Vehicle {hoveredVehicle.id}</div>
+            <div className="font-bold text-cyan-400 mb-2 flex items-center gap-2">
+              <span>
+                {hoveredVehicle.type in VEHICLE_TYPES 
+                  ? VEHICLE_TYPES[hoveredVehicle.type as VehicleType].icon 
+                  : '🚗'}
+              </span>
+              <span>Vehicle {hoveredVehicle.id}</span>
+            </div>
             <div className="space-y-1 text-gray-300">
-              <div><span className="text-gray-400">Type:</span> <span className="capitalize">{hoveredVehicle.type.replace('_', ' ')}</span></div>
+              <div>
+                <span className="text-gray-400">Type:</span> 
+                <span 
+                  className="capitalize ml-1 px-2 py-0.5 rounded text-xs font-semibold"
+                  style={{
+                    backgroundColor: getVehicleColorByType(hoveredVehicle.type) + '33',
+                    color: getVehicleColorByType(hoveredVehicle.type)
+                  }}
+                >
+                  {hoveredVehicle.type in VEHICLE_TYPES 
+                    ? VEHICLE_TYPES[hoveredVehicle.type as VehicleType].label 
+                    : hoveredVehicle.type.replace('_', ' ')}
+                </span>
+              </div>
               <div><span className="text-gray-400">Speed:</span> {hoveredVehicle.speed.toFixed(2)} m/s</div>
               <div><span className="text-gray-400">Road:</span> {hoveredVehicle.road_id}</div>
               <div><span className="text-gray-400">Lane:</span> {hoveredVehicle.lane_id}</div>
@@ -1218,26 +1358,15 @@ export default function SUMODashboard() {
         <div className="bg-gray-900 bg-opacity-95 backdrop-blur-md rounded-xl px-4 py-3 border border-gray-700 shadow-xl mb-2">
           <h3 className="text-gray-400 text-xs font-semibold uppercase tracking-wider mb-2">Vehicle Types</h3>
           <div className="space-y-1.5">
-            <div className="flex items-center gap-2">
-              <div className="w-4 h-4 rounded" style={{backgroundColor: '#3b82f6'}}></div>
-              <span className="text-gray-300 text-xs">Car</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <div className="w-4 h-4 rounded" style={{backgroundColor: '#10b981'}}></div>
-              <span className="text-gray-300 text-xs">Regular Bus</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <div className="w-4 h-4 rounded" style={{backgroundColor: '#fbbf24'}}></div>
-              <span className="text-gray-300 text-xs">Olympic Shuttle</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <div className="w-4 h-4 rounded" style={{backgroundColor: '#06b6d4'}}></div>
-              <span className="text-gray-300 text-xs">Accessible</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <div className="w-4 h-4 rounded" style={{backgroundColor: '#ef4444'}}></div>
-              <span className="text-gray-300 text-xs">Emergency</span>
-            </div>
+            {Object.entries(VEHICLE_TYPES).map(([type, config]) => (
+              <div key={type} className="flex items-center gap-2">
+                <div 
+                  className="w-4 h-4 rounded" 
+                  style={{backgroundColor: config.color}}
+                ></div>
+                <span className="text-gray-300 text-xs">{config.icon} {config.label}</span>
+              </div>
+            ))}
           </div>
         </div>
         <div className="bg-gray-900 bg-opacity-95 backdrop-blur-md rounded-xl px-4 py-3 border border-gray-700 shadow-xl">
@@ -1289,6 +1418,80 @@ export default function SUMODashboard() {
                 {apiStatus}
               </div>
             )}
+
+            {/* Simulation Controls */}
+            <div className="mb-6 p-4 bg-gray-800 bg-opacity-50 rounded-lg border border-gray-700">
+              <h3 className="text-white font-semibold text-lg mb-4">Simulation Control</h3>
+              <div className="grid grid-cols-2 gap-3 mb-4">
+                <button
+                  onClick={startSimulation}
+                  disabled={simStatus.running}
+                  className={`px-4 py-3 rounded-lg font-medium transition-colors ${
+                    simStatus.running 
+                      ? 'bg-gray-700 text-gray-500 cursor-not-allowed'
+                      : 'bg-green-600 hover:bg-green-700 text-white'
+                  }`}
+                >
+                  ▶️ Start
+                </button>
+                <button
+                  onClick={stopSimulation}
+                  disabled={!simStatus.running}
+                  className={`px-4 py-3 rounded-lg font-medium transition-colors ${
+                    !simStatus.running 
+                      ? 'bg-gray-700 text-gray-500 cursor-not-allowed'
+                      : 'bg-red-600 hover:bg-red-700 text-white'
+                  }`}
+                >
+                  ⏹️ Stop
+                </button>
+                {!simStatus.paused ? (
+                  <button
+                    onClick={pauseSimulation}
+                    disabled={!simStatus.running}
+                    className={`px-4 py-3 rounded-lg font-medium transition-colors ${
+                      !simStatus.running 
+                        ? 'bg-gray-700 text-gray-500 cursor-not-allowed'
+                        : 'bg-yellow-600 hover:bg-yellow-700 text-white'
+                    }`}
+                  >
+                    ⏸️ Pause
+                  </button>
+                ) : (
+                  <button
+                    onClick={resumeSimulation}
+                    className="px-4 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-medium transition-colors"
+                  >
+                    ▶️ Resume
+                  </button>
+                )}
+                <button
+                  onClick={restartSimulation}
+                  className="px-4 py-3 bg-purple-600 hover:bg-purple-700 text-white rounded-lg font-medium transition-colors"
+                >
+                  🔄 Restart
+                </button>
+              </div>
+              <div className="mt-4">
+                <label className="text-gray-300 text-sm mb-2 block">
+                  Simulation Speed: {simStatus.speed}x
+                </label>
+                <input
+                  type="range"
+                  min="0.1"
+                  max="10"
+                  step="0.1"
+                  value={simStatus.speed}
+                  onChange={(e) => setSimulationSpeed(parseFloat(e.target.value))}
+                  className="w-full"
+                />
+                <div className="flex justify-between text-xs text-gray-500 mt-1">
+                  <span>0.1x</span>
+                  <span>1x</span>
+                  <span>10x</span>
+                </div>
+              </div>
+            </div>
 
             {/* AI Toggle */}
             <div className="mb-6 p-4 bg-gray-800 bg-opacity-50 rounded-lg border border-gray-700">

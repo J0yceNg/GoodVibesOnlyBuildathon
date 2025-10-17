@@ -8,9 +8,16 @@ import os
 import sys
 import traci
 import sumolib
+import threading
+import subprocess
 from shared_config import live_config
 
 app = FastAPI()
+
+# FairLane controller process/thread
+fairlane_process = None
+fairlane_thread = None
+fairlane_controller = None  # Will be set when controller starts
 
 # Enable CORS for Next.js frontend
 app.add_middleware(
@@ -58,10 +65,6 @@ NET_FILE = os.path.join(BASE_DIR, "olympic_corridor.net.xml")
 
 # Network data cache - loaded once and reused
 _network_data_cache = None
-
-# Track simulation process
-simulation_process = None
-simulation_thread = None
 
 def get_connection_manager():
     """Get the ConnectionManager instance for external use"""
@@ -525,151 +528,105 @@ async def reset_config():
 
 @app.post("/api/simulation/start")
 async def start_simulation():
-    """Start the simulation"""
-    try:
-        if live_config.is_simulation_running():
-            raise HTTPException(status_code=400, detail="Simulation already running")
-        
-        live_config.start_simulation()
+    """Start the simulation - sends signal to FairLane controller"""
+    # Since the simulation auto-starts, this endpoint mainly confirms status
+    # or can be used to restart if the simulation was stopped
+    
+    if live_config.is_simulation_running():
         return {
             "success": True,
-            "status": "started",
-            "message": "Simulation started"
+            "status": "already_running",
+            "message": "Simulation is already running"
         }
-    except AttributeError:
-        # Fallback if methods don't exist yet
-        return {
-            "success": True,
-            "status": "started",
-            "message": "Simulation control not fully implemented yet"
-        }
+    
+    # Signal the controller to start (if it was previously stopped)
+    live_config.start_simulation()
+    
+    return {
+        "success": True,
+        "status": "started",
+        "message": "Simulation started"
+    }
 
 @app.post("/api/simulation/stop")
 async def stop_simulation():
-    """Stop the simulation"""
-    try:
-        if not live_config.is_simulation_running():
-            raise HTTPException(status_code=400, detail="Simulation not running")
-        
-        live_config.stop_simulation()
-        return {
-            "success": True,
-            "status": "stopped",
-            "message": "Simulation stopped"
-        }
-    except AttributeError:
-        return {
-            "success": True,
-            "status": "stopped",
-            "message": "Simulation control not fully implemented yet"
-        }
+    """Stop the simulation - sends signal to FairLane controller"""
+    if not live_config.is_simulation_running():
+        raise HTTPException(status_code=400, detail="Simulation not running")
+    
+    live_config.request_stop()
+    
+    return {
+        "success": True,
+        "status": "stopped",
+        "message": "Simulation stop requested"
+    }
 
 @app.post("/api/simulation/pause")
 async def pause_simulation():
-    """Pause the simulation"""
-    try:
-        if not live_config.is_simulation_running():
-            raise HTTPException(status_code=400, detail="Simulation not running")
-        
-        if live_config.is_simulation_paused():
-            raise HTTPException(status_code=400, detail="Simulation already paused")
-        
-        live_config.pause_simulation()
-        return {
-            "success": True,
-            "status": "paused",
-            "message": "Simulation paused"
-        }
-    except AttributeError:
-        return {
-            "success": True,
-            "status": "paused",
-            "message": "Simulation control not fully implemented yet"
-        }
+    """Pause the simulation - sends signal to FairLane controller"""
+    if not live_config.is_simulation_running():
+        raise HTTPException(status_code=400, detail="Simulation not running")
+    
+    if live_config.is_simulation_paused():
+        raise HTTPException(status_code=400, detail="Simulation already paused")
+    
+    live_config.pause_simulation()
+    
+    return {
+        "success": True,
+        "status": "paused",
+        "message": "Simulation paused"
+    }
 
 @app.post("/api/simulation/resume")
 async def resume_simulation():
-    """Resume the simulation"""
-    try:
-        if not live_config.is_simulation_paused():
-            raise HTTPException(status_code=400, detail="Simulation not paused")
-        
-        live_config.resume_simulation()
-        return {
-            "success": True,
-            "status": "running",
-            "message": "Simulation resumed"
-        }
-    except AttributeError:
-        return {
-            "success": True,
-            "status": "running",
-            "message": "Simulation control not fully implemented yet"
-        }
+    """Resume the simulation - sends signal to FairLane controller"""
+    if not live_config.is_simulation_paused():
+        raise HTTPException(status_code=400, detail="Simulation not paused")
+    
+    live_config.resume_simulation()
+    
+    return {
+        "success": True,
+        "status": "running",
+        "message": "Simulation resumed"
+    }
 
 @app.post("/api/simulation/restart")
 async def restart_simulation():
-    """Restart the simulation"""
-    try:
-        live_config.restart_simulation()
-        return {
-            "success": True,
-            "status": "restarting",
-            "message": "Simulation restarting"
-        }
-    except AttributeError:
-        return {
-            "success": True,
-            "status": "restarting",
-            "message": "Simulation control not fully implemented yet"
-        }
+    """Restart the simulation - sends signal to FairLane controller"""
+    live_config.request_restart()
+    
+    return {
+        "success": True,
+        "status": "restarting",
+        "message": "Simulation restart requested"
+    }
 
 @app.post("/api/simulation/speed")
 async def set_simulation_speed(data: SimulationSpeed):
     """Set simulation speed (0.1x to 10x)"""
-    try:
-        live_config.set_simulation_speed(data.speed)
-        return {
-            "success": True,
-            "speed": live_config.get_simulation_speed()
-        }
-    except AttributeError:
-        return {
-            "success": True,
-            "speed": 1.0,
-            "message": "Simulation speed control not fully implemented yet"
-        }
+    if data.speed < 0.1 or data.speed > 10.0:
+        raise HTTPException(status_code=400, detail="Speed must be between 0.1 and 10.0")
+    
+    live_config.set_simulation_speed(data.speed)
+    
+    return {
+        "success": True,
+        "speed": live_config.get_simulation_speed()
+    }
 
 @app.get("/api/simulation/status")
 async def get_simulation_status():
-    """Get current simulation status"""
-    try:
-        config = live_config.get_all_config()
-        if 'simulation' in config:
-            return {
-                "running": config['simulation']['running'],
-                "paused": config['simulation']['paused'],
-                "current_step": config['simulation']['current_step'],
-                "time": config['simulation']['time'],
-                "speed": config['simulation']['speed']
-            }
-        else:
-            # Fallback if simulation tracking not in config
-            return {
-                "running": True,
-                "paused": False,
-                "current_step": 0,
-                "time": 0.0,
-                "speed": 1.0
-            }
-    except AttributeError:
-        return {
-            "running": True,
-            "paused": False,
-            "current_step": 0,
-            "time": 0.0,
-            "speed": 1.0
-        }
+    """Get current simulation status from shared config"""
+    return {
+        "running": live_config.is_simulation_running(),
+        "paused": live_config.is_simulation_paused(),
+        "current_step": live_config.get_current_step(),
+        "time": float(live_config.get_current_step()),
+        "speed": live_config.get_simulation_speed()
+    }
 
 
 # ============================================
@@ -711,12 +668,42 @@ async def websocket_endpoint(websocket: WebSocket):
 
 @app.on_event("startup")
 async def startup_event():
-    # WebSocket server ready - simulation will be controlled by FairLane
+    """Start the server and automatically launch the simulation"""
+    global fairlane_thread, fairlane_controller
+    
     print("=" * 60)
     print("SUMO TraCI WebSocket Server Starting")
     print("=" * 60)
     print(f"Network File: {NET_FILE}")
-    print("Waiting for TraCI connection from FairLane controller...")
+    print("=" * 60)
+    
+    # Automatically start the FairLane controller
+    def run_fairlane():
+        global fairlane_controller
+        try:
+            # Import here to avoid circular dependency
+            from fairlane_controller import FairLaneController
+            
+            print("\n🚀 Starting FairLane Controller...")
+            
+            # Create controller with broadcast callback
+            fairlane_controller = FairLaneController(policy_mode="ensemble")
+            fairlane_controller.broadcast_callback = broadcast_simulation_update
+            
+            # Auto-start the simulation (not in API mode, so it starts immediately)
+            fairlane_controller.run_simulation(gui=False, api_mode=False)
+        except Exception as e:
+            print(f"❌ Error running FairLane controller: {e}")
+            import traceback
+            traceback.print_exc()
+        finally:
+            fairlane_controller = None
+    
+    # Start FairLane controller in background thread
+    fairlane_thread = threading.Thread(target=run_fairlane, daemon=True)
+    fairlane_thread.start()
+    
+    print("✅ FairLane controller launched in background")
     print("=" * 60)
 
 @app.get("/")

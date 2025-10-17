@@ -40,7 +40,7 @@ class LiveConfig:
     _paused: bool = False
     _restart: bool = False
     _stop: bool = False
-    _speed: float = 1.0
+    _speed: float = 10.0  # Start at maximum speed by default
     _current_step: int = 0
     
     # Thread lock for safe updates

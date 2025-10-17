@@ -7,6 +7,7 @@ AI-powered traffic signal priority system for Olympic corridor
 import traci
 import sys
 import time
+import asyncio
 from collections import defaultdict
 from datetime import datetime, timedelta
 from shared_config import live_config
@@ -30,6 +31,9 @@ class FairLaneController:
             'predictions_made': 0,
             'high_congestion_prevented': 0
         }
+        
+        # Callback for broadcasting updates (set by server)
+        self.broadcast_callback = None
 
         # === Prediction model (Adapter) ===
         try:
@@ -342,11 +346,19 @@ class FairLaneController:
         """
         
         sumoBinary = "sumo-gui" if gui else "sumo"
-        sumoCmd = [sumoBinary, "-c", "olympic_corridor.sumocfg"]
+        # Add --step-length 0 for maximum speed, --delay 0 for no GUI delay
+        sumoCmd = [sumoBinary, "-c", "olympic_corridor.sumocfg", 
+                   "--step-length", "1",  # Smaller time steps = faster progression
+                   "--delay", "0"]  # No delay between steps in GUI
+        
+        if not gui:
+            # When running without GUI, add --no-step-log for even faster execution
+            sumoCmd.extend(["--no-step-log", "true"])
         
         print("=" * 60)
         print("FairLane Dynamic Transit Lane Optimizer")
         print("🎮 LIVE CONTROL MODE ENABLED")
+        print("⚡ MAXIMUM SPEED MODE")
         print("=" * 60)
         
         if api_mode:
@@ -406,12 +418,8 @@ class FairLaneController:
                 if live_config.should_simulation_stop():
                     break
                 
-                # Simulation speed control
-                speed = live_config.get_simulation_speed()
-                if speed != 1.0:
-                    # Adjust delay based on speed (lower speed = more delay)
-                    delay = (1.0 / speed) * 0.01  # Base delay of 10ms
-                    time.sleep(delay)
+                # No artificial delays - run at maximum speed
+                # Speed control removed for fastest execution
                 
                 # Normal simulation step
                 traci.simulationStep()
@@ -461,6 +469,14 @@ class FairLaneController:
                             
                     except traci.exceptions.TraCIException:
                         continue
+                
+                # Broadcast updates to WebSocket clients (works in both API and auto-start mode)
+                # Broadcasting every step for smooth real-time visualization
+                if self.broadcast_callback:
+                    try:
+                        asyncio.run(self.broadcast_callback())
+                    except Exception as e:
+                        pass  # Silently fail if broadcast unavailable
                 
                 if step % 300 == 0:
                     self.print_statistics(step)
