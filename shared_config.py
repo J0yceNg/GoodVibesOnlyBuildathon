@@ -128,5 +128,91 @@ class LiveConfig:
             print("[CONFIG] Reset to default values")
 
 
-# Global instance - shared between FastAPI and simulation
+@dataclass
+class SimulationControl:
+    """
+    Simulation state control for start/stop/pause/restart
+    Thread-safe for concurrent access from API and simulation
+    """
+    running: bool = False
+    paused: bool = False
+    should_stop: bool = False
+    should_restart: bool = False
+    current_step: int = 0
+    simulation_speed: float = 1.0
+    
+    _lock: threading.Lock = field(default_factory=threading.Lock, repr=False)
+    
+    def is_simulation_running(self) -> bool:
+        with self._lock:
+            return self.running
+    
+    def is_simulation_paused(self) -> bool:
+        with self._lock:
+            return self.paused
+    
+    def should_simulation_stop(self) -> bool:
+        with self._lock:
+            return self.should_stop
+    
+    def should_simulation_restart(self) -> bool:
+        with self._lock:
+            return self.should_restart
+    
+    def get_current_step(self) -> int:
+        with self._lock:
+            return self.current_step
+    
+    def get_simulation_speed(self) -> float:
+        with self._lock:
+            return self.simulation_speed
+    
+    def start_simulation(self):
+        with self._lock:
+            self.running = True
+            self.should_stop = False
+            self.paused = False
+            print("[CONTROL] Simulation started")
+    
+    def stop_simulation(self):
+        with self._lock:
+            self.should_stop = True
+            print("[CONTROL] Stop signal sent")
+    
+    def mark_simulation_stopped(self):
+        with self._lock:
+            self.running = False
+            self.should_stop = False
+            self.current_step = 0
+            print("[CONTROL] Simulation stopped")
+    
+    def pause_simulation(self):
+        with self._lock:
+            self.paused = True
+            print("[CONTROL] Simulation paused")
+    
+    def resume_simulation(self):
+        with self._lock:
+            self.paused = False
+            print("[CONTROL] Simulation resumed")
+    
+    def restart_simulation(self):
+        with self._lock:
+            self.should_restart = True
+            self.should_stop = True
+            print("[CONTROL] Restart signal sent")
+    
+    def update_current_step(self, step: int):
+        with self._lock:
+            self.current_step = step
+    
+    def set_simulation_speed(self, speed: float):
+        with self._lock:
+            if 0.1 <= speed <= 10.0:
+                self.simulation_speed = speed
+                print(f"[CONTROL] Simulation speed set to {speed}x")
+
+
+# Global instances - shared between FastAPI and simulation
 live_config = LiveConfig()
+sim_control = SimulationControl()
